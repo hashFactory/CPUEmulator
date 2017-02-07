@@ -1,0 +1,46 @@
+0x01
+2 byte
+MOV
+Moves data byte from memory into chosen register
+
+0x02
+1 byte
+PUSH
+Pushes a single byte to the stack, incrementing pointer
+From register 2 to stack
+
+0x03
+1 byte
+POP
+Retrieves a single byte, designated by argument byte from the stack, decreasing pointer
+Putting it in register 2
+
+0x04
+2 byte
+ADD
+Adds the first register and second register and stores the result in the first register
+
+0x05
+2 byte
+SUB
+Subtracts first register and second register and stores the result in the first register
+
+0x06
+2 byte
+PLACE
+Places chosen byte into chosen register, quite simple enim
+
+0x07
+1 byte
+PRINT
+Prints out chosen byte in number form
+
+0x08
+2 byte
+MUL
+Multiplies first register and second register and stores the result in the first register
+
+0x09
+2 byte
+DIV
+Divides first register and second register and stores the result in the first register
