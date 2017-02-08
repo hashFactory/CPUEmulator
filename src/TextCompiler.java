@@ -35,6 +35,7 @@ public class TextCompiler
 
         sc.close();
         System.out.println("Done writing program to " + filename);
+        CPUMain.print_program(path_to_program);
     }
 
     private static byte[] parse(String line)
@@ -95,6 +96,9 @@ public class TextCompiler
                 break;
             case "PRINTHEX":
                 bytes.put(CPUMain.PRINTHEX).put(DatatypeConverter.parseHexBinary(split[1]));
+                break;
+            case "JMP":
+                bytes.put(CPUMain.JMP).put(DatatypeConverter.parseHexBinary(split[1]));
                 break;
         }
         return bytes.array();

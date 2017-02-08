@@ -95,4 +95,9 @@ public class CPUInstructions
     {
         System.out.println("Register " + first + ": " + String.format("0x%02x", registers.reg[first]));
     }
+
+    public void jmp(byte first)
+    {
+        registers.reg[0] = (byte)(first - 1);
+    }
 }

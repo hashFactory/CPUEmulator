@@ -79,3 +79,8 @@ Logic XOR on the two specified registers
 1 byte
 PRINTHEX
 Print out the specified register in hex form
+
+0x11
+1 byte
+JMP
+Goes to the specified memory location

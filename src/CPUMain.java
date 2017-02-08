@@ -8,7 +8,6 @@ public class CPUMain
 {
     // TODO: Create 16-bit arithmetic
     // TODO: Create specific instructions for fixed data
-    // TODO: Implement GOTO command
     // TODO: Implement if statement (make it basically be a GOTO)
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
     // TODO NEVER - Implement floating point
@@ -31,6 +30,7 @@ public class CPUMain
     public static final byte NOR = 0x0e;
     public static final byte XOR = 0x0f;
     public static final byte PRINTHEX = 0x10;
+    public static final byte JMP = 0x11;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -123,12 +123,15 @@ public class CPUMain
                         set.printhex(program_data[set.registers.reg[0] + 1]);
                         set.registers.reg[0] ++ ;
                         break;
+                    case JMP:
+                        set.jmp(program_data[set.registers.reg[0] + 1]);
+                        break;
                 }
             }
         }
     }
 
-    private static void print_program(Path path_to_program) throws IOException
+    public static void print_program(Path path_to_program) throws IOException
     {
         System.out.println("Program Data: ");
         byte[] program_data = Files.readAllBytes(path_to_program);
