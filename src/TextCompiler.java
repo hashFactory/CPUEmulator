@@ -15,16 +15,23 @@ public class TextCompiler
 
         Files.write(path_to_program, new byte[]{});
 
+        //ByteBuffer instructions = ByteBuffer.allocate((int)Files.size(Paths.get(source.toURI())) / 2);
         ByteBuffer instructions = ByteBuffer.allocate((int)Files.size(Paths.get(source.toURI())) / 2);
 
         Scanner sc = new Scanner(source);
 
+        int length_of_program = 0;
         while (sc.hasNextLine())
         {
-            instructions.put(parse(sc.nextLine()));
+            byte[] line = parse(sc.nextLine());
+            length_of_program += line.length;
+            instructions.put(line);
         }
 
-        Files.write(path_to_program, instructions.array(), StandardOpenOption.APPEND);
+        byte[] instructions_shortened = new byte[length_of_program];
+
+        System.arraycopy(instructions.array(), 0, instructions_shortened, 0, length_of_program);
+        Files.write(path_to_program, instructions_shortened, StandardOpenOption.APPEND);
 
         sc.close();
         System.out.println("Done writing program to " + filename);
@@ -68,7 +75,27 @@ public class TextCompiler
             case "DIV":
                 bytes.put(CPUMain.DIV).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
                 break;
-
+            case "AND":
+                bytes.put(CPUMain.AND).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                break;
+            case "OR":
+                bytes.put(CPUMain.OR).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                break;
+            case "NOT":
+                bytes.put(CPUMain.AND).put(DatatypeConverter.parseHexBinary(split[1]));
+                break;
+            case "NAND":
+                bytes.put(CPUMain.NAND).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                break;
+            case "NOR":
+                bytes.put(CPUMain.NOR).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                break;
+            case "XOR":
+                bytes.put(CPUMain.XOR).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                break;
+            case "PRINTHEX":
+                bytes.put(CPUMain.PRINTHEX).put(DatatypeConverter.parseHexBinary(split[1]));
+                break;
         }
         return bytes.array();
     }

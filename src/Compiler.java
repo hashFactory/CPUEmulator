@@ -4,13 +4,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+// DEPRECATED
+
 public class Compiler
 {
     // Register 0 is sacred, indicates placement in program
     // Register 1 is sacred, indicates pointer to position in stack
+    @Deprecated
     public static void main(String [] args) throws IOException
     {
-        // TODO: Let compilation occur on source file
         // Lets the user choose his outputing file
         String filename = "testing.out";
         // Initializes the path to said file

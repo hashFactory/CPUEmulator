@@ -15,6 +15,13 @@ public class CPUMain
     public static final byte PRINT = 0x07;
     public static final byte MUL = 0x08;
     public static final byte DIV = 0x09;
+    public static final byte AND = 0x0a;
+    public static final byte OR = 0x0b;
+    public static final byte NOT = 0x0c;
+    public static final byte NAND = 0x0d;
+    public static final byte NOR = 0x0e;
+    public static final byte XOR = 0x0f;
+    public static final byte PRINTHEX = 0x10;
 
     private static CPUInstructions set = new CPUInstructions(1024);
 
@@ -33,7 +40,7 @@ public class CPUMain
         int program_data_length = program_data.length;
 
         boolean is_instruction = true;
-        for (int i = 0; i < program_data_length; i+=2)
+        for (int i = 0; i < program_data_length; i++)
         {
             byte current_byte = program_data[i];
             if (is_instruction)
@@ -42,35 +49,66 @@ public class CPUMain
                 {
                     case MOV:
                         set.mov(program_data[i + 1], program_data[i + 2]);
-                        i++;
+                        i+=2;
                         break;
                     case PUSH:
                         set.push(program_data[i + 1]);
+                        i++;
                         break;
                     case POP:
                         set.pop(program_data[i + 1]);
+                        i++;
                         break;
                     case ADD:
                         set.add(program_data[i + 1], program_data[i + 2]);
-                        i++;
+                        i+=2;
                         break;
                     case SUB:
                         set.sub(program_data[i + 1], program_data[i + 2]);
-                        i++;
+                        i+=2;
                         break;
                     case PLACE:
                         set.place(program_data[i + 1], program_data[i + 2]);
-                        i++;
+                        i+=2;
                         break;
                     case PRINT:
                         set.print(program_data[i + 1]);
+                        i++;
                         break;
                     case MUL:
                         set.mul(program_data[i + 1], program_data[i + 2]);
-                        i++;
+                        i+=2;
                         break;
                     case DIV:
                         set.div(program_data[i + 1], program_data[i + 2]);
+                        i+=2;
+                        break;
+                    case AND:
+                        set.and(program_data[i + 1], program_data[i + 2]);
+                        i+=2;
+                        break;
+                    case OR:
+                        set.or(program_data[i + 1], program_data[i + 2]);
+                        i+=2;
+                        break;
+                    case NOT:
+                        set.not(program_data[i + 1]);
+                        i++;
+                        break;
+                    case NAND:
+                        set.nand(program_data[i + 1], program_data[i + 2]);
+                        i+=2;
+                        break;
+                    case NOR:
+                        set.nor(program_data[i + 1], program_data[i + 2]);
+                        i+=2;
+                        break;
+                    case XOR:
+                        set.xor(program_data[i + 1], program_data[i + 2]);
+                        i+=2;
+                        break;
+                    case PRINTHEX:
+                        set.printhex(program_data[i + 1]);
                         i++;
                         break;
                 }
@@ -84,12 +122,13 @@ public class CPUMain
         byte[] program_data = Files.readAllBytes(path_to_program);
         for (byte mem: program_data)
         {
-            System.out.print(mem + " ");
+            System.out.print(String.format("0x%02x", mem) + " ");
         }
+        System.out.print("\n");
     }
 
     private static void print_registers(CPURegisters reg)
     {
-
+        // TODO: Implement
     }
 }

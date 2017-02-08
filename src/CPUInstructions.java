@@ -44,7 +44,7 @@ public class CPUInstructions
 
     public void print(byte first)
     {
-        System.out.println("\nRegister " + first + ": " + registers.reg[first]);
+        System.out.println("Register " + first + ": " + registers.reg[first]);
     }
 
     public void mul(byte first, byte second)
@@ -55,5 +55,40 @@ public class CPUInstructions
     public void div(byte first, byte second)
     {
         registers.reg[first] /= registers.reg[second];
+    }
+
+    public void and(byte first, byte second)
+    {
+        registers.reg[first] &= registers.reg[second];
+    }
+
+    public void or(byte first, byte second)
+    {
+        registers.reg[first] |= registers.reg[second];
+    }
+
+    public void not(byte first)
+    {
+        registers.reg[first] = (byte)~(int)(registers.reg[first]);
+    }
+
+    public void nand(byte first, byte second)
+    {
+        registers.reg[first] = (byte)~(registers.reg[first] & registers.reg[second]);
+    }
+
+    public void nor(byte first, byte second)
+    {
+        registers.reg[first] = (byte)~(registers.reg[first] | registers.reg[second]);
+    }
+
+    public void xor(byte first, byte second)
+    {
+        registers.reg[first] ^= registers.reg[second];
+    }
+
+    public void printhex(byte first)
+    {
+        System.out.println("Register " + first + ": " + String.format("0x%02x", registers.reg[first]));
     }
 }
