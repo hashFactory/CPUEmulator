@@ -23,7 +23,7 @@ public class CPUInstructions
 
     public void pop(byte first)
     {
-        registers.reg[0x02] = memory.stack[registers.reg[1]];
+        registers.reg[0x02] = memory.stack[registers.reg[1] - first];
         registers.reg[1]--;
     }
 
