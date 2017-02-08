@@ -6,6 +6,14 @@ import java.nio.file.*;
 
 public class CPUMain
 {
+    // TODO: Create 16-bit arithmetic
+    // TODO: Create specific instructions for fixed data
+    // TODO: Get the program into memory to implement GOTO command
+    // TODO: Implement if statement (make it basically be a GOTO)
+    // TODO: Implement read and write from file (pointer to filename & length of data segment)
+    // Getting all of that done will lead to turing completeness (almost)
+    // Pat yourself on the back bud, you did great!
+
     public static final byte MOV = 0x01;
     public static final byte PUSH = 0x02;
     public static final byte POP = 0x03;
