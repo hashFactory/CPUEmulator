@@ -20,7 +20,7 @@ public class CPUMain
 
     public static void main(String [] args) throws IOException
     {
-        Path path_to_program = Paths.get("testing.out");
+        Path path_to_program = Paths.get("test.tristan.out");
 
         print_program(path_to_program);
         run_program(path_to_program);
