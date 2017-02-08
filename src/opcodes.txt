@@ -84,3 +84,8 @@ Print out the specified register in hex form
 1 byte
 JMP
 Goes to the specified memory location
+
+0x12
+4 byte
+CMP
+Compares the first two byte and jumps to 3rd byte in memory if true, 4th byte if false

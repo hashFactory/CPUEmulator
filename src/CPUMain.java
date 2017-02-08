@@ -8,7 +8,6 @@ public class CPUMain
 {
     // TODO: Create 16-bit arithmetic
     // TODO: Create specific instructions for fixed data
-    // TODO: Implement if statement (make it basically be a GOTO)
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
     // TODO NEVER - Implement floating point
     // Getting all of that done will lead to turing completeness (almost)
@@ -31,6 +30,7 @@ public class CPUMain
     public static final byte XOR = 0x0f;
     public static final byte PRINTHEX = 0x10;
     public static final byte JMP = 0x11;
+    public static final byte CMP = 0x12;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -125,6 +125,9 @@ public class CPUMain
                         break;
                     case JMP:
                         set.jmp(program_data[set.registers.reg[0] + 1]);
+                        break;
+                    case CMP:
+                        set.cmp(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2], program_data[set.registers.reg[0] + 3], program_data[set.registers.reg[0] + 4]);
                         break;
                 }
             }

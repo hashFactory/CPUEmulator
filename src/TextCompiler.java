@@ -100,6 +100,9 @@ public class TextCompiler
             case "JMP":
                 bytes.put(CPUMain.JMP).put(DatatypeConverter.parseHexBinary(split[1]));
                 break;
+            case "CMP":
+                bytes.put(CPUMain.CMP).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2])).put(DatatypeConverter.parseHexBinary(split[3])).put(DatatypeConverter.parseHexBinary(split[4]));
+                break;
         }
         return bytes.array();
     }

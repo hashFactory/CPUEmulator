@@ -100,4 +100,16 @@ public class CPUInstructions
     {
         registers.reg[0] = (byte)(first - 1);
     }
+
+    public void cmp(byte first, byte second, byte third, byte fourth)
+    {
+        if (registers.reg[first] == registers.reg[second])
+        {
+            jmp(third);
+        }
+        else
+        {
+            jmp(fourth);
+        }
+    }
 }
