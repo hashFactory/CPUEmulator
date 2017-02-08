@@ -10,6 +10,8 @@ public class CPUMain
     // TODO: Create specific instructions for fixed data
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
     // TODO NEVER - Implement floating point
+    // TODO: Video buffer
+    // TODO: 16-bit program coutner
     // Getting all of that done will lead to turing completeness (almost)
     // Pat yourself on the back bud, you did great!
 
@@ -31,6 +33,8 @@ public class CPUMain
     public static final byte PRINTHEX = 0x10;
     public static final byte JMP = 0x11;
     public static final byte CMP = 0x12;
+    public static final byte HLT = 0x13;
+    public static final byte RND = 0x14;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -128,6 +132,13 @@ public class CPUMain
                         break;
                     case CMP:
                         set.cmp(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2], program_data[set.registers.reg[0] + 3], program_data[set.registers.reg[0] + 4]);
+                        break;
+                    case HLT:
+                        set.hlt();
+                        break;
+                    case RND:
+                        set.rnd(program_data[set.registers.reg[0] + 1]);
+                        set.registers.reg[0] ++;
                         break;
                 }
             }

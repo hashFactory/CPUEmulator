@@ -89,3 +89,13 @@ Goes to the specified memory location
 4 byte
 CMP
 Compares the first two byte and jumps to 3rd byte in memory if true, 4th byte if false
+
+0x13
+0 byte
+HLT
+Exits the program
+
+0x14
+1 byte
+RND
+Creates random byte and puts it in specified register

@@ -44,6 +44,7 @@ public class TextCompiler
         for (int i = 0; i < split.length; i++)
         {
             split[i] = split[i].toLowerCase().replaceAll("0x", "");
+            split[i] = split[i].toLowerCase().replaceAll("1x", "");
         }
         ByteBuffer bytes = ByteBuffer.allocate(split.length);
 
@@ -102,6 +103,12 @@ public class TextCompiler
                 break;
             case "CMP":
                 bytes.put(CPUMain.CMP).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2])).put(DatatypeConverter.parseHexBinary(split[3])).put(DatatypeConverter.parseHexBinary(split[4]));
+                break;
+            case "HLT":
+                bytes.put(CPUMain.HLT);
+                break;
+            case "RND":
+                bytes.put(CPUMain.RND).put(DatatypeConverter.parseHexBinary(split[1]));
                 break;
         }
         return bytes.array();

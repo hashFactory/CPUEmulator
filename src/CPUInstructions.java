@@ -112,4 +112,14 @@ public class CPUInstructions
             jmp(fourth);
         }
     }
+
+    public void hlt()
+    {
+        System.exit(0);
+    }
+
+    public void rnd(byte first)
+    {
+        registers.reg[first] = (byte)(Math.random() * 256);
+    }
 }
