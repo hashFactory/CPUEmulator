@@ -8,9 +8,10 @@ public class CPUMain
 {
     // TODO: Create 16-bit arithmetic
     // TODO: Create specific instructions for fixed data
-    // TODO: Get the program into memory to implement GOTO command
+    // TODO: Implement GOTO command
     // TODO: Implement if statement (make it basically be a GOTO)
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
+    // TODO NEVER - Implement floating point
     // Getting all of that done will lead to turing completeness (almost)
     // Pat yourself on the back bud, you did great!
 
@@ -31,11 +32,13 @@ public class CPUMain
     public static final byte XOR = 0x0f;
     public static final byte PRINTHEX = 0x10;
 
-    private static CPUInstructions set = new CPUInstructions(1024);
+    private static CPUInstructions set = new CPUInstructions();
 
     public static void main(String [] args) throws IOException
     {
         Path path_to_program = Paths.get("test.tristan.out");
+
+        set.setMemory((int)Files.size(path_to_program) + 4096);
 
         print_program(path_to_program);
         run_program(path_to_program);
@@ -45,79 +48,80 @@ public class CPUMain
     public static void run_program(Path path_to_program) throws IOException
     {
         byte[] program_data = Files.readAllBytes(path_to_program);
+        System.arraycopy(program_data, 0, set.memory.stack, 0, program_data.length);
         int program_data_length = program_data.length;
 
         boolean is_instruction = true;
-        for (int i = 0; i < program_data_length; i++)
+        for (; set.registers.reg[0] < program_data_length; set.registers.reg[0]++)
         {
-            byte current_byte = program_data[i];
+            byte current_byte = set.memory.stack[set.registers.reg[0]];
             if (is_instruction)
             {
                 switch (current_byte)
                 {
                     case MOV:
-                        set.mov(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.mov(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case PUSH:
-                        set.push(program_data[i + 1]);
-                        i++;
+                        set.push(program_data[set.registers.reg[0] + 1]);
+                        set.registers.reg[0] ++;
                         break;
                     case POP:
-                        set.pop(program_data[i + 1]);
-                        i++;
+                        set.pop(program_data[set.registers.reg[0] + 1]);
+                        set.registers.reg[0] ++;
                         break;
                     case ADD:
-                        set.add(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.add(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case SUB:
-                        set.sub(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.sub(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case PLACE:
-                        set.place(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.place(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case PRINT:
-                        set.print(program_data[i + 1]);
-                        i++;
+                        set.print(program_data[set.registers.reg[0] + 1]);
+                        set.registers.reg[0] ++ ;
                         break;
                     case MUL:
-                        set.mul(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.mul(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case DIV:
-                        set.div(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.div(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case AND:
-                        set.and(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.and(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case OR:
-                        set.or(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.or(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case NOT:
-                        set.not(program_data[i + 1]);
-                        i++;
+                        set.not(program_data[set.registers.reg[0] + 1]);
+                        set.registers.reg[0] ++ ;
                         break;
                     case NAND:
-                        set.nand(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.nand(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case NOR:
-                        set.nor(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.nor(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case XOR:
-                        set.xor(program_data[i + 1], program_data[i + 2]);
-                        i+=2;
+                        set.xor(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
+                        set.registers.reg[0] += 2;
                         break;
                     case PRINTHEX:
-                        set.printhex(program_data[i + 1]);
-                        i++;
+                        set.printhex(program_data[set.registers.reg[0] + 1]);
+                        set.registers.reg[0] ++ ;
                         break;
                 }
             }

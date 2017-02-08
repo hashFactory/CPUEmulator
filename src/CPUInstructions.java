@@ -4,9 +4,13 @@ public class CPUInstructions
     public static CPURegisters registers = null;
     public static CPUMemory memory = null;
 
-    public CPUInstructions(int size)
+    public CPUInstructions()
     {
         registers = new CPURegisters();
+    }
+
+    public void setMemory(int size)
+    {
         memory = new CPUMemory(size);
     }
 

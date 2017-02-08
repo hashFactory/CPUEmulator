@@ -89,7 +89,7 @@ public class TextCompiler
                 break;
             case "NOR":
                 bytes.put(CPUMain.NOR).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
-                break;
+            break;
             case "XOR":
                 bytes.put(CPUMain.XOR).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
                 break;
