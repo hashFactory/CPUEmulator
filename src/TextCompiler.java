@@ -9,8 +9,8 @@ public class TextCompiler
 {
     public static void main(String [] args) throws IOException
     {
-        File source = new File("test.tristan");
-        String filename = "test.tristan.out";
+        File source = new File("test.wor");
+        String filename = "test.wor.out";
         Path path_to_program = Paths.get(filename);
 
         Files.write(path_to_program, new byte[]{});

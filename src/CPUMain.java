@@ -36,7 +36,7 @@ public class CPUMain
 
     public static void main(String [] args) throws IOException
     {
-        Path path_to_program = Paths.get("test.tristan.out");
+        Path path_to_program = Paths.get("test.wor.out");
 
         set.setMemory((int)Files.size(path_to_program) + 4096);
 
