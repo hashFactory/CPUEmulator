@@ -9,11 +9,12 @@ public class CPUMain
     // TODO: Create 16-bit arithmetic
     // TODO: Create specific instructions for fixed data
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
-    // TODO NEVER - Implement floating point
+    // TODO NEVER: - Implement floating point
     // TODO: Video buffer
     // TODO: 16-bit program coutner
     // TODO: Code the MOV command
     // TODO: Implement interupts that output essential program data
+    // TODO: Implement PRINTCHAR
     // Pat yourself on the back bud, you did great!
 
     public static final byte MOV = 0x01;
@@ -36,12 +37,13 @@ public class CPUMain
     public static final byte CMP = 0x12;
     public static final byte HLT = 0x13;
     public static final byte RND = 0x14;
+    public static final byte PRINTCHAR = 0x15;
 
     private static CPUInstructions set = new CPUInstructions();
 
     public static void main(String [] args) throws IOException
     {
-        String filename = "pop_and_push.wor.out";
+        String filename = "small_counting.wor.out";
         Path path_to_program = Paths.get(filename);
         System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 
@@ -145,6 +147,10 @@ public class CPUMain
                         break;
                     case RND:
                         set.rnd(program_data[set.registers.reg[0] + 1]);
+                        set.registers.reg[0] ++;
+                        break;
+                    case PRINTCHAR:
+                        set.printchar(program_data[set.registers.reg[0] + 1]);
                         set.registers.reg[0] ++;
                         break;
                 }

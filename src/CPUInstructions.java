@@ -123,4 +123,9 @@ public class CPUInstructions
     {
         registers.reg[first] = (byte)(Math.random() * 256);
     }
+
+    public void printchar(byte first)
+    {
+        System.out.print((char)registers.reg[first]);
+    }
 }

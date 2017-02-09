@@ -1,3 +1,3 @@
-RND 0x02
-PRINTHEX 0x02
-JMP 0x00
+RND 0x02            ; Create random byte and store it in register 0x02
+PRINTCHAR 0x02      ; Print random byte in hex
+JMP 0x02            ; Jump back to the beginning of the program

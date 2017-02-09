@@ -99,3 +99,8 @@ Exits the program
 1 byte
 RND
 Creates random byte and puts it in specified register
+
+0x15
+1 byte
+PRINTCHAR
+Prints the specified register as a char

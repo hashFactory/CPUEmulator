@@ -7,9 +7,10 @@ import java.util.Scanner;
 
 public class TextCompiler
 {
+    public static File source = new File("small_counting.wor");
+
     public static void main(String [] args) throws IOException
     {
-        File source = new File("pop_and_push.wor");
         String filename = source.getName() + ".out";
         Path path_to_program = Paths.get(filename);
 
@@ -129,6 +130,10 @@ public class TextCompiler
                 break;
             case "RND":
                 bytes.put(CPUMain.RND).put(DatatypeConverter.parseHexBinary(split[1]));
+                instruction_length = 2;
+                break;
+            case "PRINTCHAR":
+                bytes.put(CPUMain.PRINTCHAR).put(DatatypeConverter.parseHexBinary(split[1]));
                 instruction_length = 2;
                 break;
         }
