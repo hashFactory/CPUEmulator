@@ -12,7 +12,8 @@ public class CPUMain
     // TODO NEVER - Implement floating point
     // TODO: Video buffer
     // TODO: 16-bit program coutner
-    // Getting all of that done will lead to turing completeness (almost)
+    // TODO: Fix POP instruction and code the MOV command
+    // TODO: Implement clean print register
     // Pat yourself on the back bud, you did great!
 
     public static final byte MOV = 0x01;
@@ -146,6 +147,8 @@ public class CPUMain
                 }
             }
         }
+
+        System.out.println((char)27 + "[33mProgram did " + (char)27 + "[31mNOT " + (char)27 + "[33mexit cleanly." + (char)27 + "[0m");
     }
 
     public static void print_program(Path path_to_program) throws IOException

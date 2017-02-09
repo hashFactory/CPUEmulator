@@ -115,6 +115,7 @@ public class CPUInstructions
 
     public void hlt()
     {
+        System.out.println((char)27 + "[32mSuccessfully exited from emulation." + (char)27 + "[0m");
         System.exit(0);
     }
 
