@@ -40,9 +40,12 @@ public class CPUMain
 
     public static void main(String [] args) throws IOException
     {
-        Path path_to_program = Paths.get("test.wor.out");
+        String filename = "small_counting.wor.out";
+        Path path_to_program = Paths.get(filename);
+        System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 
         set.setMemory((int)Files.size(path_to_program) + 4096);
+        System.out.println((char)27 + "[32mSuccessfully initialized Registers, Memory, and Instruction Set" + (char)27 + "[0m");
 
         print_program(path_to_program);
         run_program(path_to_program);
