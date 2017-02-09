@@ -1,0 +1,5 @@
+PUSH 0x34       ; Push 0x34 to the stack
+PUSH 0x27       ; Push 0x27 to the stack
+PUSH 0x02       ; Push 0x02 to the stack
+POP 0x01        ; Should return the second last item on the stack (0x27)
+PRINTHEX 0x02   ; Print out the register

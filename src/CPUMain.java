@@ -12,7 +12,7 @@ public class CPUMain
     // TODO NEVER - Implement floating point
     // TODO: Video buffer
     // TODO: 16-bit program coutner
-    // TODO: Fix POP instruction and code the MOV command
+    // TODO: Code the MOV command
     // TODO: Implement clean print register
     // Pat yourself on the back bud, you did great!
 
@@ -41,7 +41,7 @@ public class CPUMain
 
     public static void main(String [] args) throws IOException
     {
-        String filename = "small_counting.wor.out";
+        String filename = "pop_and_push.wor.out";
         Path path_to_program = Paths.get(filename);
         System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 
@@ -58,6 +58,8 @@ public class CPUMain
         byte[] program_data = Files.readAllBytes(path_to_program);
         System.arraycopy(program_data, 0, set.memory.stack, 0, program_data.length);
         int program_data_length = program_data.length;
+
+        set.registers.reg[1] = (byte)program_data_length;
 
         boolean is_instruction = true;
         for (; set.registers.reg[0] < program_data_length; set.registers.reg[0]++)

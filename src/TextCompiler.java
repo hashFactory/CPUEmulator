@@ -9,13 +9,13 @@ public class TextCompiler
 {
     public static void main(String [] args) throws IOException
     {
-        File source = new File("small_counting.wor");
-        String filename = "small_counting.wor.out";
+        File source = new File("pop_and_push.wor");
+        String filename = source.getName() + ".out";
         Path path_to_program = Paths.get(filename);
 
+        System.out.println((char)27 + "[32mCompiling " + (char)27 + "[1m" + (char)27 + "[34m" + source + (char)27 + "[0m" + (char)27 + "[32m into " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
         Files.write(path_to_program, new byte[]{});
 
-        //ByteBuffer instructions = ByteBuffer.allocate((int)Files.size(Paths.get(source.toURI())) / 2);
         ByteBuffer instructions = ByteBuffer.allocate((int)Files.size(Paths.get(source.toURI())) / 2);
 
         Scanner sc = new Scanner(source);
@@ -34,7 +34,7 @@ public class TextCompiler
         Files.write(path_to_program, instructions_shortened, StandardOpenOption.APPEND);
 
         sc.close();
-        System.out.println("Done writing program to " + filename);
+        System.out.println((char)27 + "[32mCompilation successful." + (char)27 + "[0m");
         CPUMain.print_program(path_to_program);
     }
 
