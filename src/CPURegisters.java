@@ -4,6 +4,6 @@ public class CPURegisters
     public byte[] reg;
     public CPURegisters()
     {
-        reg = new byte[512];
+        reg = new byte[32];
     }
 }

@@ -13,7 +13,6 @@ public class CPUMain
     // TODO: Video buffer
     // TODO: 16-bit program coutner
     // TODO: Code the MOV command
-    // TODO: Implement clean print register
     // Pat yourself on the back bud, you did great!
 
     public static final byte MOV = 0x01;
@@ -50,6 +49,7 @@ public class CPUMain
 
         print_program(path_to_program);
         run_program(path_to_program);
+        print_registers(set.registers);
         System.exit(0);
     }
 
@@ -166,6 +166,9 @@ public class CPUMain
 
     private static void print_registers(CPURegisters reg)
     {
-        // TODO: Implement
+        for (int i = 0; i < reg.reg.length; i++)
+        {
+            System.out.println("Register " + (char)27 + "[1m" + String.format("0x%02x", i) + (char)27 + "[0m: " + String.format("0x%02x", reg.reg[i]) + " ");
+        }
     }
 }
