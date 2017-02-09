@@ -13,6 +13,7 @@ public class CPUMain
     // TODO: Video buffer
     // TODO: 16-bit program coutner
     // TODO: Code the MOV command
+    // TODO: Implement interupts that output essential program data
     // Pat yourself on the back bud, you did great!
 
     public static final byte MOV = 0x01;
