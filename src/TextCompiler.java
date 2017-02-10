@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class TextCompiler
 {
-    public static String path = "Examples/rock.wor";
+    public static String path = "Examples/guess.wor";
     public static File source = new File(path);
 
     public static void main(String [] args) throws IOException

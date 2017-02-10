@@ -205,7 +205,7 @@ public class CPUInstructions
 
     public void jmpw(byte first, byte second)
     {
-        registers.pc = (short)(first + 256 * second - 1);
+        registers.pc = (short)((first & 0xff) + 256 * (second & 0xff) - 1);
     }
 
     public void input(byte first)

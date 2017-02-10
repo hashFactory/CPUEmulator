@@ -1,0 +1,63 @@
+;-DATA FOR ASKING USER FOR AN INPUT
+PLACE rbx00 'G'
+PLACE rbx01 'u'
+PLACE rbx02 'e'
+PLACE rbx03 's'
+PLACE rbx04 's'
+PLACE rbx05 0x20
+PLACE rbx06 't'
+PLACE rbx07 'h'
+PLACE rbx08 'e'
+PLACE rbx09 0x20
+PLACE rbx0a 'n'
+PLACE rbx0b 'u'
+PLACE rbx0c 'm'
+PLACE rbx0d 'b'
+PLACE rbx0e 'e'
+PLACE rbx0f 'r'
+PLACE rbx10 ':'
+PLACE rbx11 0x0a
+
+;-SAY USER IS WRONG
+PLACE rbx12 'Y'
+PLACE rbx13 'o'
+PLACE rbx14 'u'
+PLACE rbx15 0x20
+PLACE rbx16 'w'
+PLACE rbx17 'e'
+PLACE rbx18 'r'
+PLACE rbx19 'e'
+PLACE rbx1a 0x20
+PLACE rbx1b 'w'
+PLACE rbx1c 'r'
+PLACE rbx1d 'o'
+PLACE rbx1e 'n'
+PLACE rbx1f 'g'
+PLACE rbx20 '.'
+PLACE rbx21 0x0a
+
+;-SAY USER IS RIGHT
+PLACE rbx22 'Y'
+PLACE rbx23 'o'
+PLACE rbx24 'u'
+PLACE rbx25 0x20
+PLACE rbx26 'w'
+PLACE rbx27 'e'
+PLACE rbx28 'r'
+PLACE rbx29 'e'
+PLACE rbx2a 0x20
+PLACE rbx2b 'r'
+PLACE rbx2c 'i'
+PLACE rbx2d 'g'
+PLACE rbx2e 'h'
+PLACE rbx2f 't'
+PLACE rbx30 '!'
+PLACE rbx31 0x0a
+
+;-GET TARGET DATA
+RND rbx7d
+PRINTHEX rbx7d
+JMPW rwx0096
+
+;-GET USER INPUT
+INPUT rbx7e

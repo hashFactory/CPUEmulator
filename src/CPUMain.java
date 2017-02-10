@@ -61,7 +61,7 @@ public class CPUMain
         // TODO TEMPORARY
         TextCompiler.main(new String[0]);
 
-        String filename = "Examples/rock.wor.out";
+        String filename = "Examples/guess.wor.out";
         Path path_to_program = Paths.get(filename);
         System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 

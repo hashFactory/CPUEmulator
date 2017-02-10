@@ -1,5 +1,8 @@
+; IF YOU EVER FIND THIS CODE, IT DOESN'T WORK
+; GOOD LUCK TRYING TO FIX IT
+
 ; Start program by putting data into stack
-; Options menu string data starts at 0x0000
+;-DATA FOR ASKING USER FOR INPUT
 PLACE rbx00 '1'
 PLACE rbx01 0x20
 PLACE rbx02 'f'
@@ -42,15 +45,67 @@ PLACE rbx26 's'
 PLACE rbx27 ':'
 PLACE rbx28 0x0a
 
-; Place data for limitations of categories
+;-DATA FOR USER WINS
+PLACE rbx29 'y'
+PLACE rbx2a 'o'
+PLACE rbx2b 'u'
+PLACE rbx2c 0x20
+PLACE rbx2d 'w'
+PLACE rbx2e 'i'
+PLACE rbx2f 'n'
+PLACE rbx30 '!'
+PLACE rbx31 0x0a
+JMPW rwx9999
+
+;-DATA FOR COMPUTER WINS
+PLACE rbx32 't'
+PLACE rbx33 'h'
+PLACE rbx34 'e'
+PLACE rbx35 0x20
+PLACE rbx36 'c'
+PLACE rbx37 'o'
+PLACE rbx38 'm'
+PLACE rbx39 'p'
+PLACE rbx3a 'u'
+PLACE rbx3b 't'
+PLACE rbx3c 'e'
+PLACE rbx3d 'r'
+PLACE rbx3e 0x20
+PLACE rbx3f 'w'
+PLACE rbx40 'i'
+PLACE rbx41 'n'
+PLACE rbx42 's'
+PLACE rbx43 '!'
+PLACE rbx44 0x0a
+JMPW rwx9999
+
+;-DATA FOR TIE
+PLACE rbx45 'i'
+PLACE rbx46 't'
+PLACE rbx47 0x27
+PLACE rbx48 's'
+PLACE rbx49 0x20
+PLACE rbx4a 'a'
+PLACE rbx4b 0x20
+PLACE rbx4c 't'
+PLACE rbx4d 'i'
+PLACE rbx4e 'e'
+PLACE rbx4f '!'
+PLACE rbx50 0x0a
+JMPW rwm9999
+
+;-Place data for limitations of categories
+;-PLACE COMPARISONS
 PLACEW rwx00a0 0xD556
 PLACEW rwx00a2 0x2AAA
 
-; Method to print out option menu dialogue
+;-Method to print out option menu dialogue
+;-PRINT OUT MENU DIALOGUE
 PRINTREG rbx00 rbx28        ; This is at address 0x007b
-JMPW 0x9999
+JMPW rwx9999 ; + 1
 
-; Determine the computer's choice
+;-Determine the computer's choice
+;-GENERATE RANDOM COMPUTER VALUE
 RNDW rwx0000
 PRINTW rwx0000
 LTW rwx0000 rwx00a0 rwx4444 rwx7778
@@ -62,10 +117,10 @@ JMPW 0x9999
 PLACEW rwx7777 0x0002
 JMPW rwx9999
 
-JMPW rwx007e
-
-; Check the user's input in this
+;-GET USER INPUT AND CHECK
 INPUT rbx7f
-PRINT rbx7f
+CASTBW rwx7778 rbx7f
+;-At this point go to generate random computer move
+CMPW rwx7777 rwx7778 0x4444 0x3333
 
 HLT
