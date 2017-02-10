@@ -87,132 +87,132 @@ public class CPUMain
                 switch (current_byte)
                 {
                     case MOV:
-                        set.mov(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.mov(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case PUSH:
-                        set.push(program_data[set.registers.pc + 1]);
+                        set.push(set.memory.stack[set.registers.pc + 1]);
                         set.registers.pc ++;
                         break;
                     case POP:
-                        set.pop(program_data[set.registers.pc + 1]);
+                        set.pop(set.memory.stack[set.registers.pc + 1]);
                         set.registers.pc ++;
                         break;
                     case ADD:
-                        set.add(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.add(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case SUB:
-                        set.sub(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.sub(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case PLACE:
-                        set.place(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.place(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case PRINT:
-                        set.print(program_data[set.registers.pc + 1]);
+                        set.print(set.memory.stack[set.registers.pc + 1]);
                         set.registers.pc ++ ;
                         break;
                     case MUL:
-                        set.mul(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.mul(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case DIV:
-                        set.div(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.div(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case AND:
-                        set.and(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.and(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case OR:
-                        set.or(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.or(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case NOT:
-                        set.not(program_data[set.registers.pc + 1]);
+                        set.not(set.memory.stack[set.registers.pc + 1]);
                         set.registers.pc ++ ;
                         break;
                     case NAND:
-                        set.nand(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.nand(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case NOR:
-                        set.nor(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.nor(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case XOR:
-                        set.xor(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.xor(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case PRINTHEX:
-                        set.printhex(program_data[set.registers.pc + 1]);
+                        set.printhex(set.memory.stack[set.registers.pc + 1]);
                         set.registers.pc ++ ;
                         break;
                     case JMP:
-                        set.jmp(program_data[set.registers.pc + 1]);
+                        set.jmp(set.memory.stack[set.registers.pc + 1]);
                         break;
                     case CMP:
-                        set.cmp(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.cmp(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4]);
                         break;
                     case HLT:
                         set.hlt();
                         break;
                     case RND:
-                        set.rnd(program_data[set.registers.pc + 1]);
+                        set.rnd(set.memory.stack[set.registers.pc + 1]);
                         set.registers.pc ++;
                         break;
                     case PRINTCHAR:
-                        set.printchar(program_data[set.registers.pc + 1]);
+                        set.printchar(set.memory.stack[set.registers.pc + 1]);
                         set.registers.pc ++;
                         break;
                     case PLACEW:
-                        set.placew(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.placew(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4]);
                         set.registers.pc += 4;
                         break;
                     case ADDW:
-                        set.addw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.addw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4]);
                         set.registers.pc += 4;
                         break;
                     case SUBW:
-                        set.subw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.subw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4]);
                         set.registers.pc += 4;
                         break;
                     case MULW:
-                        set.mulw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.mulw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4]);
                         set.registers.pc += 4;
                         break;
                     case DIVW:
-                        set.divw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.divw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4]);
                         set.registers.pc += 4;
                         break;
                     case PRINTW:
-                        set.printw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.printw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case PRINTHEXW:
-                        set.printhexw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.printhexw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case CMPW:
-                        set.cmpw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4], program_data[set.registers.pc + 5], program_data[set.registers.pc + 6], program_data[set.registers.pc + 7], program_data[set.registers.pc + 8]);
+                        set.cmpw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4], set.memory.stack[set.registers.pc + 5], set.memory.stack[set.registers.pc + 6], set.memory.stack[set.registers.pc + 7], set.memory.stack[set.registers.pc + 8]);
                         set.registers.pc += 8;
                         break;
                     case JMPW:
-                        set.jmpw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.jmpw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                     case GTW:
-                        set.gtw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4], program_data[set.registers.pc + 5], program_data[set.registers.pc + 6], program_data[set.registers.pc + 7], program_data[set.registers.pc + 8]);
+                        set.gtw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4], set.memory.stack[set.registers.pc + 5], set.memory.stack[set.registers.pc + 6], set.memory.stack[set.registers.pc + 7], set.memory.stack[set.registers.pc + 8]);
                         set.registers.pc += 8;
                         break;
                     case LTW:
-                        set.ltw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4], program_data[set.registers.pc + 5], program_data[set.registers.pc + 6], program_data[set.registers.pc + 7], program_data[set.registers.pc + 8]);
+                        set.ltw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4], set.memory.stack[set.registers.pc + 5], set.memory.stack[set.registers.pc + 6], set.memory.stack[set.registers.pc + 7], set.memory.stack[set.registers.pc + 8]);
                         set.registers.pc += 8;
                         break;
                     case INPUT:
-                        set.input(program_data[set.registers.pc + 1]);
+                        set.input(set.memory.stack[set.registers.pc + 1]);
                         set.registers.pc ++;
                         break;
                 }
