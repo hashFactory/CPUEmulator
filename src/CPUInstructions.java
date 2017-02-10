@@ -96,9 +96,9 @@ public class CPUInstructions
         System.out.println("Register " + first + ": " + String.format("0x%02x", registers.reg[first]));
     }
 
-    public void jmp(byte first)
+    public void jmp(short first)
     {
-        registers.reg[0] = (byte)(first - 1);
+        registers.pc = (short)(first - 1);
     }
 
     public void cmp(byte first, byte second, byte third, byte fourth)
@@ -127,5 +127,10 @@ public class CPUInstructions
     public void printchar(byte first)
     {
         System.out.print((char)registers.reg[first]);
+    }
+
+    public void placew(byte first, byte second, byte third, byte fourth)
+    {
+        registers.regw[first + second * 256] = (short)(third + fourth * 256);
     }
 }

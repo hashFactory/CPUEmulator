@@ -104,3 +104,8 @@ Creates random byte and puts it in specified register
 1 byte
 PRINTCHAR
 Prints the specified register as a char
+
+0x16
+1 short 1 short
+PLACEW
+Place word into specified word register

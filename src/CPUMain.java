@@ -11,10 +11,9 @@ public class CPUMain
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
     // TODO NEVER: - Implement floating point
     // TODO: Video buffer
-    // TODO: 16-bit program coutner
     // TODO: Code the MOV command
     // TODO: Implement interupts that output essential program data
-    // TODO: Implement PRINTCHAR
+    // TODO: Implement input, greater than, and less than
     // Pat yourself on the back bud, you did great!
 
     public static final byte MOV = 0x01;
@@ -38,12 +37,13 @@ public class CPUMain
     public static final byte HLT = 0x13;
     public static final byte RND = 0x14;
     public static final byte PRINTCHAR = 0x15;
+    public static final byte PLACEW = 0x16;
 
     private static CPUInstructions set = new CPUInstructions();
 
     public static void main(String [] args) throws IOException
     {
-        String filename = "small_counting.wor.out";
+        String filename = "test.wor.out";
         Path path_to_program = Paths.get(filename);
         System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 
@@ -53,6 +53,7 @@ public class CPUMain
         print_program(path_to_program);
         run_program(path_to_program);
         print_registers(set.registers);
+        print_registers_w(set.registers);
         System.exit(0);
     }
 
@@ -62,96 +63,100 @@ public class CPUMain
         System.arraycopy(program_data, 0, set.memory.stack, 0, program_data.length);
         int program_data_length = program_data.length;
 
-        set.registers.reg[1] = (byte)program_data_length;
+        set.registers.pl = (short)program_data_length;
 
         boolean is_instruction = true;
-        for (; set.registers.reg[0] < program_data_length; set.registers.reg[0]++)
+        for (; set.registers.pc < program_data_length; set.registers.pc++)
         {
-            byte current_byte = set.memory.stack[set.registers.reg[0]];
+            byte current_byte = set.memory.stack[set.registers.pc];
             if (is_instruction)
             {
                 switch (current_byte)
                 {
                     case MOV:
-                        set.mov(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.mov(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case PUSH:
-                        set.push(program_data[set.registers.reg[0] + 1]);
-                        set.registers.reg[0] ++;
+                        set.push(program_data[set.registers.pc + 1]);
+                        set.registers.pc ++;
                         break;
                     case POP:
-                        set.pop(program_data[set.registers.reg[0] + 1]);
-                        set.registers.reg[0] ++;
+                        set.pop(program_data[set.registers.pc + 1]);
+                        set.registers.pc ++;
                         break;
                     case ADD:
-                        set.add(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.add(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case SUB:
-                        set.sub(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.sub(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case PLACE:
-                        set.place(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.place(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case PRINT:
-                        set.print(program_data[set.registers.reg[0] + 1]);
-                        set.registers.reg[0] ++ ;
+                        set.print(program_data[set.registers.pc + 1]);
+                        set.registers.pc ++ ;
                         break;
                     case MUL:
-                        set.mul(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.mul(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case DIV:
-                        set.div(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.div(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case AND:
-                        set.and(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.and(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case OR:
-                        set.or(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.or(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case NOT:
-                        set.not(program_data[set.registers.reg[0] + 1]);
-                        set.registers.reg[0] ++ ;
+                        set.not(program_data[set.registers.pc + 1]);
+                        set.registers.pc ++ ;
                         break;
                     case NAND:
-                        set.nand(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.nand(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case NOR:
-                        set.nor(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.nor(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case XOR:
-                        set.xor(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2]);
-                        set.registers.reg[0] += 2;
+                        set.xor(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                     case PRINTHEX:
-                        set.printhex(program_data[set.registers.reg[0] + 1]);
-                        set.registers.reg[0] ++ ;
+                        set.printhex(program_data[set.registers.pc + 1]);
+                        set.registers.pc ++ ;
                         break;
                     case JMP:
-                        set.jmp(program_data[set.registers.reg[0] + 1]);
+                        set.jmp(program_data[set.registers.pc + 1]);
                         break;
                     case CMP:
-                        set.cmp(program_data[set.registers.reg[0] + 1], program_data[set.registers.reg[0] + 2], program_data[set.registers.reg[0] + 3], program_data[set.registers.reg[0] + 4]);
+                        set.cmp(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
                         break;
                     case HLT:
                         set.hlt();
                         break;
                     case RND:
-                        set.rnd(program_data[set.registers.reg[0] + 1]);
-                        set.registers.reg[0] ++;
+                        set.rnd(program_data[set.registers.pc + 1]);
+                        set.registers.pc ++;
                         break;
                     case PRINTCHAR:
-                        set.printchar(program_data[set.registers.reg[0] + 1]);
-                        set.registers.reg[0] ++;
+                        set.printchar(program_data[set.registers.pc + 1]);
+                        set.registers.pc ++;
+                        break;
+                    case PLACEW:
+                        set.placew(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.registers.pc += 4;
                         break;
                 }
             }
@@ -176,6 +181,14 @@ public class CPUMain
         for (int i = 0; i < reg.reg.length; i++)
         {
             System.out.println("Register " + (char)27 + "[1m" + String.format("0x%02x", i) + (char)27 + "[0m: " + String.format("0x%02x", reg.reg[i]) + " ");
+        }
+    }
+
+    private static void print_registers_w(CPURegisters reg)
+    {
+        for (int i = 0; i < reg.regw.length; i++)
+        {
+            System.out.println("Register " + (char)27 + "[1m" + String.format("0x%04x", i) + (char)27 + "[0m: " + String.format("0x%04x", reg.regw[i]) + " ");
         }
     }
 }

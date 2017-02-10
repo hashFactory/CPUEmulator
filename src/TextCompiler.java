@@ -1,13 +1,14 @@
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.file.*;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class TextCompiler
 {
-    public static File source = new File("small_counting.wor");
+    public static File source = new File("test.wor");
 
     public static void main(String [] args) throws IOException
     {
@@ -47,7 +48,7 @@ public class TextCompiler
             split[i] = split[i].toLowerCase().replaceAll("0x", "");
             split[i] = split[i].toLowerCase().replaceAll("1x", "");
         }
-        ByteBuffer bytes = ByteBuffer.allocate(split.length);
+        ByteBuffer bytes = ByteBuffer.allocate(split.length * 2);
 
         int instruction_length = 0;
         switch (split[0].toUpperCase())
@@ -135,6 +136,10 @@ public class TextCompiler
             case "PRINTCHAR":
                 bytes.put(CPUMain.PRINTCHAR).put(DatatypeConverter.parseHexBinary(split[1]));
                 instruction_length = 2;
+                break;
+            case "PLACEW":
+                bytes.put(CPUMain.PLACEW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 5;
                 break;
         }
 
