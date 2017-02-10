@@ -5,6 +5,7 @@ public class CPURegisters
     public short[] regw;
     public short pc = 0;
     public short pl = 0;
+    public short sh = 0;
     public CPURegisters()
     {
         reg = new byte[128];

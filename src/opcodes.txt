@@ -146,3 +146,13 @@ Prints the decimal value of 16 bit specified register
 1 short
 PRINTHEXW
 Prints the hexadecimal value of 16 bit specified register
+
+0x1d
+4 short
+CMPW
+Compares 2 word registers and then jumps to specified memory location if true and other if false
+
+0x20
+1 short
+JMPW
+Jump to specified word memory spot

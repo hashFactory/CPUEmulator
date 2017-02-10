@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class TextCompiler
 {
-    public static String path = "Tests/16bit_arith.wor";
+    public static String path = "small_counting.wor";
     public static File source = new File(path);
 
     public static void main(String [] args) throws IOException
@@ -47,9 +47,14 @@ public class TextCompiler
 
         for (int i = 0; i < split.length; i++)
         {
-            if (split[i].substring(0, 3).equalsIgnoreCase("RBx") || split[i].substring(0, 3).equalsIgnoreCase("RWx"))
+            try {
+                if (split[i].substring(0, 3).equalsIgnoreCase("RBx") || split[i].substring(0, 3).equalsIgnoreCase("RWx"))
+                {
+                    split[i] = parse_static_value(split[i]);
+                }
+            }
+            catch (StringIndexOutOfBoundsException ex)
             {
-                split[i] = parse_static_value(split[i]);
             }
         }
 
@@ -162,6 +167,10 @@ public class TextCompiler
                 break;
             case "PRINTHEXW":
                 bytes.put(CPUMain.PRINTHEXW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 3;
+                break;
+            case "JMPW":
+                bytes.put(CPUMain.JMPW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
                 break;
         }

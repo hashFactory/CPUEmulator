@@ -6,9 +6,8 @@ import java.nio.file.*;
 
 public class CPUMain
 {
-    // TODO: Create 16-bit arithmetic
-    // TODO: Create specific instructions for fixed data
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
+    // TODO: Priority low: literal instructions vs pointer instructions
     // TODO NEVER: - Implement floating point
     // TODO: Video buffer
     // TODO: Code the MOV command
@@ -44,6 +43,9 @@ public class CPUMain
     public static final byte DIVW = 0x1a;
     public static final byte PRINTW = 0x1b;
     public static final byte PRINTHEXW = 0x1c;
+    public static final byte CMPW = 0x1d;
+
+    public static final byte JMPW = 0x20;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -52,7 +54,7 @@ public class CPUMain
         // TODO TEMPORARY
         TextCompiler.main(new String[0]);
 
-        String filename = "Tests/16bit_arith.wor.out";
+        String filename = "small_counting.wor.out";
         Path path_to_program = Paths.get(filename);
         System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 
@@ -191,6 +193,9 @@ public class CPUMain
                         set.printhexw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
+                    case JMPW:
+                        set.jmpw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                 }
             }
         }

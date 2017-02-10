@@ -21,14 +21,14 @@ public class CPUInstructions
 
     public void push(byte first)
     {
-        registers.reg[1]++;
-        memory.stack[registers.reg[1]] = first;
+        memory.stack[registers.pl + registers.sh] = first;
+        registers.sh++;
     }
 
     public void pop(byte first)
     {
-        registers.reg[0x02] = memory.stack[registers.reg[1] - first];
-        registers.reg[1]--;
+        registers.reg[0x02] = memory.stack[registers.pl + registers.sh - (short)(first)];
+        registers.sh--;
     }
 
     public void add(byte first, byte second)
@@ -162,5 +162,15 @@ public class CPUInstructions
     public void printhexw(byte first, byte second)
     {
         System.out.println("Register " + String.format("0x%04x", first + 256 * second) + ": " + String.format("0x%04x", registers.regw[first + 256 * second]));
+    }
+
+    public void cmpw(byte first, byte second, byte third, byte fourth, byte fifth, byte sixth, byte seventh, byte eighth)
+    {
+        // TODO
+    }
+
+    public void jmpw(byte first, byte second)
+    {
+        registers.pc = (short)(first + 256 * second);
     }
 }
