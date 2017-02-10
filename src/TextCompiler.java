@@ -125,7 +125,7 @@ public class TextCompiler
                 instruction_length = 3;
                 break;
             case "NOT":
-                bytes.put(CPUMain.AND).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.NOT).put(DatatypeConverter.parseHexBinary(split[1]));
                 instruction_length = 2;
                 break;
             case "NAND":
@@ -218,6 +218,10 @@ public class TextCompiler
                 break;
             case "CASTBW":
                 bytes.put(CPUMain.CASTBW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(DatatypeConverter.parseHexBinary(split[2]));
+                instruction_length = 4;
+                break;
+            case "RNDRANGE":
+                bytes.put(CPUMain.RNDRANGE).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2])).put(DatatypeConverter.parseHexBinary(split[3]));
                 instruction_length = 4;
                 break;
         }

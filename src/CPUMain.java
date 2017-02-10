@@ -53,6 +53,7 @@ public class CPUMain
     public static final byte PRINTREG = 0x25;
     public static final byte CASTWB = 0x26;
     public static final byte CASTBW = 0x27;
+    public static final byte RNDRANGE = 0x28;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -234,6 +235,10 @@ public class CPUMain
                         break;
                     case CASTBW:
                         set.castbw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3]);
+                        set.registers.pc += 3;
+                        break;
+                    case RNDRANGE:
+                        set.rndrange(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3]);
                         set.registers.pc += 3;
                         break;
                 }

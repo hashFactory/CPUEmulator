@@ -240,4 +240,9 @@ public class CPUInstructions
     {
         registers.regw[first + second * 256] = (short)registers.reg[third];
     }
+
+    public void rndrange(byte first, byte second, byte third)
+    {
+        registers.reg[first] = (byte)((Math.random() * (third - second)) + second);
+    }
 }

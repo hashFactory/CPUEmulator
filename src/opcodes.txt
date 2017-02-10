@@ -202,3 +202,8 @@ Cast word into byte (hopefully no overflow)
 1 short 1 byte
 CASTBW
 Cast a byte into a word
+
+0x28
+3 byte
+RNDRANGE
+Put second byte as low and third byte as high to put into first register
