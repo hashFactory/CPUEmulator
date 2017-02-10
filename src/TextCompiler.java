@@ -169,9 +169,25 @@ public class TextCompiler
                 bytes.put(CPUMain.PRINTHEXW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
                 break;
+            case "CMPW":
+                bytes.put(CPUMain.CMPW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[3])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[4])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 9;
+                break;
+            case "GTW":
+                bytes.put(CPUMain.GTW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[3])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[4])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 9;
+                break;
+            case "LTW":
+                bytes.put(CPUMain.LTW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[3])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[4])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 9;
+                break;
             case "JMPW":
                 bytes.put(CPUMain.JMPW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
+                break;
+            case "INPUT":
+                bytes.put(CPUMain.INPUT).put(DatatypeConverter.parseHexBinary(split[1]));
+                instruction_length = 2;
                 break;
         }
 

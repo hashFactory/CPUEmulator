@@ -1,8 +1,10 @@
+import java.util.Scanner;
 
 public class CPUInstructions
 {
     public static CPURegisters registers = null;
     public static CPUMemory memory = null;
+    public static Scanner kb = new Scanner(System.in);
 
     public CPUInstructions()
     {
@@ -116,6 +118,7 @@ public class CPUInstructions
     public void hlt()
     {
         System.out.println((char)27 + "[32mSuccessfully exited from emulation." + (char)27 + "[0m");
+        kb.close();
         System.exit(0);
     }
 
@@ -166,11 +169,47 @@ public class CPUInstructions
 
     public void cmpw(byte first, byte second, byte third, byte fourth, byte fifth, byte sixth, byte seventh, byte eighth)
     {
-        // TODO
+        if (registers.regw[first + 256 * second] == registers.regw[third + fourth * 256])
+        {
+            jmpw(sixth, seventh);
+        }
+        else
+        {
+            jmpw(seventh, eighth);
+        }
+    }
+
+    public void gtw(byte first, byte second, byte third, byte fourth, byte fifth, byte sixth, byte seventh, byte eighth)
+    {
+        if (registers.regw[first + 256 * second] > registers.regw[third + fourth * 256])
+        {
+            jmpw(fifth, sixth);
+        }
+        else
+        {
+            jmpw(seventh, eighth);
+        }
+    }
+
+    public void ltw(byte first, byte second, byte third, byte fourth, byte fifth, byte sixth, byte seventh, byte eighth)
+    {
+        if (registers.regw[first + 256 * second] < registers.regw[third + fourth * 256])
+        {
+            jmpw(sixth, seventh);
+        }
+        else
+        {
+            jmpw(seventh, eighth);
+        }
     }
 
     public void jmpw(byte first, byte second)
     {
         registers.pc = (short)(first + 256 * second);
+    }
+
+    public void input(byte first)
+    {
+        registers.reg[first] = kb.nextByte();
     }
 }

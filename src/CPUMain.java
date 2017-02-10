@@ -44,8 +44,10 @@ public class CPUMain
     public static final byte PRINTW = 0x1b;
     public static final byte PRINTHEXW = 0x1c;
     public static final byte CMPW = 0x1d;
-
+    public static final byte GTW = 0x1e;
+    public static final byte LTW = 0x1f;
     public static final byte JMPW = 0x20;
+    public static final byte INPUT = 0x21;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -193,9 +195,26 @@ public class CPUMain
                         set.printhexw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
+                    case CMPW:
+                        set.cmpw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4], program_data[set.registers.pc + 5], program_data[set.registers.pc + 6], program_data[set.registers.pc + 7], program_data[set.registers.pc + 8]);
+                        set.registers.pc += 8;
+                        break;
                     case JMPW:
                         set.jmpw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
                         set.registers.pc += 2;
+                        break;
+                    case GTW:
+                        set.gtw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4], program_data[set.registers.pc + 5], program_data[set.registers.pc + 6], program_data[set.registers.pc + 7], program_data[set.registers.pc + 8]);
+                        set.registers.pc += 8;
+                        break;
+                    case LTW:
+                        set.ltw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4], program_data[set.registers.pc + 5], program_data[set.registers.pc + 6], program_data[set.registers.pc + 7], program_data[set.registers.pc + 8]);
+                        set.registers.pc += 8;
+                        break;
+                    case INPUT:
+                        set.input(program_data[set.registers.pc + 1]);
+                        set.registers.pc ++;
+                        break;
                 }
             }
         }

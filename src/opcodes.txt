@@ -152,7 +152,22 @@ Prints the hexadecimal value of 16 bit specified register
 CMPW
 Compares 2 word registers and then jumps to specified memory location if true and other if false
 
+0x1e
+4 short
+GTW
+Compares 2 word registers, if the first is larger than the second, then jump to third word, otherwise, jump to fourth
+
+0x1f
+4 short
+LTW
+Compares 2 word registers, if the first is larger than the second, then jump to third word, otherwise, jump to fourth
+
 0x20
 1 short
 JMPW
 Jump to specified word memory spot
+
+0x21
+1 byte
+INPUT
+Input 1 character to the specified register
