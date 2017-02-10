@@ -171,7 +171,7 @@ public class CPUInstructions
     {
         if (registers.regw[first + 256 * second] == registers.regw[third + fourth * 256])
         {
-            jmpw(sixth, seventh);
+            jmpw(fifth, sixth);
         }
         else
         {
@@ -205,11 +205,16 @@ public class CPUInstructions
 
     public void jmpw(byte first, byte second)
     {
-        registers.pc = (short)(first + 256 * second);
+        registers.pc = (short)(first + 256 * second - 1);
     }
 
     public void input(byte first)
     {
         registers.reg[first] = kb.nextByte();
+    }
+
+    public void rndw(byte first, byte second)
+    {
+        registers.regw[first + 256 * second] = (short)(Math.random() * 65536);
     }
 }

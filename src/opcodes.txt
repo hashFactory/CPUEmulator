@@ -171,3 +171,8 @@ Jump to specified word memory spot
 1 byte
 INPUT
 Input 1 character to the specified register
+
+0x22
+1 short
+RNDW
+Stores a random word into specified register

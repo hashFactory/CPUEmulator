@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class TextCompiler
 {
-    public static String path = "small_counting.wor";
+    public static String path = "Examples/rock.wor";
     public static File source = new File(path);
 
     public static void main(String [] args) throws IOException
@@ -61,7 +61,7 @@ public class TextCompiler
         for (int i = 0; i < split.length; i++)
         {
             split[i] = split[i].toLowerCase().replaceAll("0x", "");
-            split[i] = split[i].toLowerCase().replaceAll("1x", "");
+            split[i] = split[i].toLowerCase().replaceAll("1x", ""); // Thanks victor...
         }
         ByteBuffer bytes = ByteBuffer.allocate(split.length * 2);
 
@@ -188,6 +188,10 @@ public class TextCompiler
             case "INPUT":
                 bytes.put(CPUMain.INPUT).put(DatatypeConverter.parseHexBinary(split[1]));
                 instruction_length = 2;
+                break;
+            case "RNDW":
+                bytes.put(CPUMain.RNDW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 3;
                 break;
         }
 

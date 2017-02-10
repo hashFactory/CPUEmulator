@@ -12,7 +12,6 @@ public class CPUMain
     // TODO: Video buffer
     // TODO: Code the MOV command
     // TODO: Implement interupts that output essential program data
-    // TODO: Implement input, greater than, and less than
     // Pat yourself on the back bud, you did great!
 
     public static final byte MOV = 0x01;
@@ -48,6 +47,7 @@ public class CPUMain
     public static final byte LTW = 0x1f;
     public static final byte JMPW = 0x20;
     public static final byte INPUT = 0x21;
+    public static final byte RNDW = 0x22;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -56,7 +56,7 @@ public class CPUMain
         // TODO TEMPORARY
         TextCompiler.main(new String[0]);
 
-        String filename = "small_counting.wor.out";
+        String filename = "Examples/rock.wor.out";
         Path path_to_program = Paths.get(filename);
         System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 
@@ -197,23 +197,23 @@ public class CPUMain
                         break;
                     case CMPW:
                         set.cmpw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4], set.memory.stack[set.registers.pc + 5], set.memory.stack[set.registers.pc + 6], set.memory.stack[set.registers.pc + 7], set.memory.stack[set.registers.pc + 8]);
-                        set.registers.pc += 8;
                         break;
                     case JMPW:
                         set.jmpw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
-                        set.registers.pc += 2;
                         break;
                     case GTW:
                         set.gtw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4], set.memory.stack[set.registers.pc + 5], set.memory.stack[set.registers.pc + 6], set.memory.stack[set.registers.pc + 7], set.memory.stack[set.registers.pc + 8]);
-                        set.registers.pc += 8;
                         break;
                     case LTW:
                         set.ltw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4], set.memory.stack[set.registers.pc + 5], set.memory.stack[set.registers.pc + 6], set.memory.stack[set.registers.pc + 7], set.memory.stack[set.registers.pc + 8]);
-                        set.registers.pc += 8;
                         break;
                     case INPUT:
                         set.input(set.memory.stack[set.registers.pc + 1]);
                         set.registers.pc ++;
+                        break;
+                    case RNDW:
+                        set.rndw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
+                        set.registers.pc++;
                         break;
                 }
             }
@@ -224,11 +224,22 @@ public class CPUMain
 
     public static void print_program(Path path_to_program) throws IOException
     {
-        System.out.println("Program Data: ");
+        System.out.println("Program Data: " + (char)27 + "[1m\t");
         byte[] program_data = Files.readAllBytes(path_to_program);
-        for (byte mem: program_data)
+        System.out.print("\t\t");
+        for (int i = 0; i < 0x10; i++)
         {
-            System.out.print(String.format("0x%02x", mem) + " ");
+            System.out.print(String.format("0x%02x", i) + "\t");
+        }
+
+        System.out.print((char)27 + "[0m");
+        for (int i = 0; i < program_data.length; i++)
+        {
+            if (i % 0x10 == 0)
+            {
+                System.out.print("\n" + (char)27 + "[1m" + String.format("0x%04x", i) + (char)27 + "[0m\t");
+            }
+            System.out.print(String.format("0x%02x", program_data[i]) + "\t");
         }
         System.out.print("\n");
     }
