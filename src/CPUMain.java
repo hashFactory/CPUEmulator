@@ -8,6 +8,7 @@ public class CPUMain
 {
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
     // TODO: Priority low: literal instructions vs pointer instructions
+    // TODO: Implement dynamic references to mamory locations in program
     // TODO NEVER: - Implement floating point
     // TODO: Video buffer
     // TODO: Code the MOV command
@@ -50,6 +51,8 @@ public class CPUMain
     public static final byte RNDW = 0x22;
     public static final byte CP = 0x23;
     public static final byte PRINTREG = 0x25;
+    public static final byte CASTWB = 0x26;
+    public static final byte CASTBW = 0x27;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -224,6 +227,14 @@ public class CPUMain
                     case PRINTREG:
                         set.printreg(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
+                        break;
+                    case CASTWB:
+                        set.castwb(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3]);
+                        set.registers.pc += 3;
+                        break;
+                    case CASTBW:
+                        set.castbw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3]);
+                        set.registers.pc += 3;
                         break;
                 }
             }

@@ -212,6 +212,14 @@ public class TextCompiler
                 bytes.put(CPUMain.PRINTREG).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
                 instruction_length = 3;
                 break;
+            case "CASTWB":
+                bytes.put(CPUMain.CASTWB).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(DatatypeConverter.parseHexBinary(split[2]));
+                instruction_length = 4;
+                break;
+            case "CASTBW":
+                bytes.put(CPUMain.CASTBW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(DatatypeConverter.parseHexBinary(split[2]));
+                instruction_length = 4;
+                break;
         }
 
         byte[] condensed_instruction = new byte[instruction_length];

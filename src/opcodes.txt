@@ -192,3 +192,13 @@ Copies from one word register to another
 2 byte
 PRINTREG
 Prints from a range from first register to second register (inclusive)
+
+0x26
+1 byte 1 short
+CASTWB
+Cast word into byte (hopefully no overflow)
+
+0x27
+1 short 1 byte
+CASTBW
+Cast a byte into a word

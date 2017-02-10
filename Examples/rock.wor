@@ -1,48 +1,71 @@
 ; Start program by putting data into stack
 ; Options menu string data starts at 0x0000
-PLACE rwx00 '1'
-PLACE rwx01 0x20
-PLACE rwx02 'f'
-PLACE rwx03 'o'
-PLACE rwx04 'r'
-PLACE rwx05 0x20
-PLACE rwx06 'r'
-PLACE rwx07 'o'
-PLACE rwx08 'c'
-PLACE rwx09 'k'
-PLACE rwx0a ','
-PLACE rwx0b 0x20
-PLACE rwx0c '2'
-PLACE rwx0d 0x20
-PLACE rwx0e 'f'
-PLACE rwx0f 'o'
-PLACE rwx10 'r'
-PLACE rwx11 0x20
-PLACE rwx12 'p'
-PLACE rwx13 'a'
-PLACE rwx14 'p'
-PLACE rwx15 'e'
-PLACE rwx16 'r'
-PLACE rwx17 ','
-PLACE rwx18 0x20
-PLACE rwx19 '3'
-PLACE rwx1a 0x20
-PLACE rwx1b 'f'
-PLACE rwx1c 'o'
-PLACE rwx1d 'r'
-PLACE rwx1e 0x20
-PLACE rwx1f 's'
-PLACE rwx20 'c'
-PLACE rwx21 'i'
-PLACE rwx22 's'
-PLACE rwx23 's'
-PLACE rwx24 'o'
-PLACE rwx25 'r'
-PLACE rwx26 's'
-PLACE rwx27 ':'
-PLACE rwx28 0x0a
+PLACE rbx00 '1'
+PLACE rbx01 0x20
+PLACE rbx02 'f'
+PLACE rbx03 'o'
+PLACE rbx04 'r'
+PLACE rbx05 0x20
+PLACE rbx06 'r'
+PLACE rbx07 'o'
+PLACE rbx08 'c'
+PLACE rbx09 'k'
+PLACE rbx0a ','
+PLACE rbx0b 0x20
+PLACE rbx0c '2'
+PLACE rbx0d 0x20
+PLACE rbx0e 'f'
+PLACE rbx0f 'o'
+PLACE rbx10 'r'
+PLACE rbx11 0x20
+PLACE rbx12 'p'
+PLACE rbx13 'a'
+PLACE rbx14 'p'
+PLACE rbx15 'e'
+PLACE rbx16 'r'
+PLACE rbx17 ','
+PLACE rbx18 0x20
+PLACE rbx19 '3'
+PLACE rbx1a 0x20
+PLACE rbx1b 'f'
+PLACE rbx1c 'o'
+PLACE rbx1d 'r'
+PLACE rbx1e 0x20
+PLACE rbx1f 's'
+PLACE rbx20 'c'
+PLACE rbx21 'i'
+PLACE rbx22 's'
+PLACE rbx23 's'
+PLACE rbx24 'o'
+PLACE rbx25 'r'
+PLACE rbx26 's'
+PLACE rbx27 ':'
+PLACE rbx28 0x0a
+
+; Place data for limitations of categories
+PLACEW rwx00a0 0xD556
+PLACEW rwx00a2 0x2AAA
 
 ; Method to print out option menu dialogue
-PRINTREG rwx00 rwx28        ; This is at address 0x007b
+PRINTREG rbx00 rbx28        ; This is at address 0x007b
+JMPW 0x9999
+
+; Determine the computer's choice
+RNDW rwx0000
+PRINTW rwx0000
+LTW rwx0000 rwx00a0 rwx4444 rwx7778
+PLACEW rwx7777 0x0000
+JMPW 0x9999
+GTW rwx0000 rwx00a2 rwx5555 rwx8889
+PLACEW rwx7777 0x0001
+JMPW 0x9999
+PLACEW rwx7777 0x0002
+JMPW rwx9999
+
+JMPW rwx007e
+
+; Check the user's input in this
+INPUT rbx7f
+PRINT rbx7f
 
 HLT

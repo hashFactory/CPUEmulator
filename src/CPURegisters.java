@@ -8,7 +8,7 @@ public class CPURegisters
     public short sh = 0;
     public CPURegisters()
     {
-        reg = new byte[128];
+        reg = new byte[0x7f];
         regw = new short[0x0400];
     }
 }

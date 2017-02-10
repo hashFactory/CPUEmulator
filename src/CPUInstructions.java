@@ -210,7 +210,7 @@ public class CPUInstructions
 
     public void input(byte first)
     {
-        registers.reg[first] = kb.nextByte();
+        registers.reg[first] = (byte)kb.next().charAt(0);
     }
 
     public void rndw(byte first, byte second)
@@ -229,5 +229,15 @@ public class CPUInstructions
         {
             System.out.print((char)registers.reg[i]);
         }
+    }
+
+    public void castwb(byte first, byte second, byte third)
+    {
+        registers.reg[first] = (byte)registers.regw[second + 256 * third];
+    }
+
+    public void castbw(byte first, byte second, byte third)
+    {
+        registers.regw[first + second * 256] = (short)registers.reg[third];
     }
 }
