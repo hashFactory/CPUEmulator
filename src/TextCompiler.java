@@ -45,6 +45,7 @@ public class TextCompiler
     {
         String[] split = line.split(" ");
 
+        // Preprocessor
         for (int i = 0; i < split.length; i++)
         {
             try {
@@ -55,6 +56,16 @@ public class TextCompiler
             }
             catch (StringIndexOutOfBoundsException ex)
             {
+            }
+
+            try
+            {
+                if (split[i].charAt(0) == 0x27 && split[i].charAt(2) == 0x27)
+                {
+                    split[i] = String.format("0x%02x", (int)split[i].charAt(1));
+                }
+            }
+            catch (StringIndexOutOfBoundsException ex) {
             }
         }
 
@@ -191,6 +202,14 @@ public class TextCompiler
                 break;
             case "RNDW":
                 bytes.put(CPUMain.RNDW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 3;
+                break;
+            case "CP":
+                bytes.put(CPUMain.CP).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                instruction_length = 3;
+                break;
+            case "PRINTREG":
+                bytes.put(CPUMain.PRINTREG).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
                 instruction_length = 3;
                 break;
         }

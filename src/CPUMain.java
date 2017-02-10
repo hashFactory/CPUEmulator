@@ -48,6 +48,8 @@ public class CPUMain
     public static final byte JMPW = 0x20;
     public static final byte INPUT = 0x21;
     public static final byte RNDW = 0x22;
+    public static final byte CP = 0x23;
+    public static final byte PRINTREG = 0x25;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -213,7 +215,15 @@ public class CPUMain
                         break;
                     case RNDW:
                         set.rndw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
-                        set.registers.pc++;
+                        set.registers.pc+=2;
+                        break;
+                    case CP:
+                        set.cp(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
+                        set.registers.pc += 2;
+                        break;
+                    case PRINTREG:
+                        set.printreg(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                 }
             }
@@ -258,5 +268,10 @@ public class CPUMain
         {
             System.out.println("Register " + (char)27 + "[1m" + String.format("0x%04x", i) + (char)27 + "[0m: " + String.format("0x%04x", reg.regw[i]) + " ");
         }
+    }
+
+    public static int unsigned_to_byte(byte b)
+    {
+        return b & 0xff;
     }
 }

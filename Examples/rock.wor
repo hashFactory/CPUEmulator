@@ -1,3 +1,48 @@
-RNDW RWx0001
-PRINTHEXW RWx0001
-JMPW RWx0000
+; Start program by putting data into stack
+; Options menu string data starts at 0x0000
+PLACE rwx00 '1'
+PLACE rwx01 0x20
+PLACE rwx02 'f'
+PLACE rwx03 'o'
+PLACE rwx04 'r'
+PLACE rwx05 0x20
+PLACE rwx06 'r'
+PLACE rwx07 'o'
+PLACE rwx08 'c'
+PLACE rwx09 'k'
+PLACE rwx0a ','
+PLACE rwx0b 0x20
+PLACE rwx0c '2'
+PLACE rwx0d 0x20
+PLACE rwx0e 'f'
+PLACE rwx0f 'o'
+PLACE rwx10 'r'
+PLACE rwx11 0x20
+PLACE rwx12 'p'
+PLACE rwx13 'a'
+PLACE rwx14 'p'
+PLACE rwx15 'e'
+PLACE rwx16 'r'
+PLACE rwx17 ','
+PLACE rwx18 0x20
+PLACE rwx19 '3'
+PLACE rwx1a 0x20
+PLACE rwx1b 'f'
+PLACE rwx1c 'o'
+PLACE rwx1d 'r'
+PLACE rwx1e 0x20
+PLACE rwx1f 's'
+PLACE rwx20 'c'
+PLACE rwx21 'i'
+PLACE rwx22 's'
+PLACE rwx23 's'
+PLACE rwx24 'o'
+PLACE rwx25 'r'
+PLACE rwx26 's'
+PLACE rwx27 ':'
+PLACE rwx28 0x0a
+
+; Method to print out option menu dialogue
+PRINTREG rwx00 rwx28        ; This is at address 0x007b
+
+HLT

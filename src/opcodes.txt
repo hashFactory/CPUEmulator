@@ -176,3 +176,19 @@ Input 1 character to the specified register
 1 short
 RNDW
 Stores a random word into specified register
+
+0x23
+2 byte
+CP
+Copies from one register to another
+
+// TODO IMPLEMENT
+0x24
+2 short
+CPW
+Copies from one word register to another
+
+0x25
+2 byte
+PRINTREG
+Prints from a range from first register to second register (inclusive)

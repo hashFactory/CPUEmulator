@@ -217,4 +217,17 @@ public class CPUInstructions
     {
         registers.regw[first + 256 * second] = (short)(Math.random() * 65536);
     }
+
+    public void cp(byte first, byte second)
+    {
+        registers.reg[first] = registers.reg[second];
+    }
+
+    public void printreg(byte first, byte second)
+    {
+        for (int i = first; i <= second; i++)
+        {
+            System.out.print((char)registers.reg[i]);
+        }
+    }
 }
