@@ -48,7 +48,7 @@ public class CPUInstructions
 
     public void print(byte first)
     {
-        System.out.println("Register " + first + ": " + registers.reg[first]);
+        System.out.println("Register " +String.format("0x%02x", first) + ": " + registers.reg[first]);
     }
 
     public void mul(byte first, byte second)
@@ -93,7 +93,7 @@ public class CPUInstructions
 
     public void printhex(byte first)
     {
-        System.out.println("Register " + first + ": " + String.format("0x%02x", registers.reg[first]));
+        System.out.println("Register " + String.format("0x%02x", first) + ": " + String.format("0x%02x", registers.reg[first]));
     }
 
     public void jmp(short first)
@@ -132,5 +132,35 @@ public class CPUInstructions
     public void placew(byte first, byte second, byte third, byte fourth)
     {
         registers.regw[first + second * 256] = (short)(third + fourth * 256);
+    }
+
+    public void addw(byte first, byte second, byte third, byte fourth)
+    {
+        registers.regw[first + second * 256] += registers.regw[third + fourth * 256];
+    }
+
+    public void subw(byte first, byte second, byte third, byte fourth)
+    {
+        registers.regw[first + second * 256] -= registers.regw[third + fourth * 256];
+    }
+
+    public void mulw(byte first, byte second, byte third, byte fourth)
+    {
+        registers.regw[first + second * 256] *= registers.regw[third + fourth * 256];
+    }
+
+    public void divw(byte first, byte second, byte third, byte fourth)
+    {
+        registers.regw[first + second * 256] /= registers.regw[third + fourth * 256];
+    }
+
+    public void printw(byte first, byte second)
+    {
+        System.out.println("Register " + String.format("0x%04x", first + 256 * second) + ": " + registers.regw[first + 256 * second]);
+    }
+
+    public void printhexw(byte first, byte second)
+    {
+        System.out.println("Register " + String.format("0x%04x", first + 256 * second) + ": " + String.format("0x%04x", registers.regw[first + 256 * second]));
     }
 }

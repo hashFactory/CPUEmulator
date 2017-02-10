@@ -8,11 +8,12 @@ import java.util.Scanner;
 
 public class TextCompiler
 {
-    public static File source = new File("test.wor");
+    public static String path = "Tests/16bit_arith.wor";
+    public static File source = new File(path);
 
     public static void main(String [] args) throws IOException
     {
-        String filename = source.getName() + ".out";
+        String filename = path + ".out";
         Path path_to_program = Paths.get(filename);
 
         System.out.println((char)27 + "[32mCompiling " + (char)27 + "[1m" + (char)27 + "[34m" + source + (char)27 + "[0m" + (char)27 + "[32m into " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
@@ -43,6 +44,15 @@ public class TextCompiler
     private static byte[] parse(String line)
     {
         String[] split = line.split(" ");
+
+        for (int i = 0; i < split.length; i++)
+        {
+            if (split[i].substring(0, 3).equalsIgnoreCase("RBx") || split[i].substring(0, 3).equalsIgnoreCase("RWx"))
+            {
+                split[i] = parse_static_value(split[i]);
+            }
+        }
+
         for (int i = 0; i < split.length; i++)
         {
             split[i] = split[i].toLowerCase().replaceAll("0x", "");
@@ -53,6 +63,7 @@ public class TextCompiler
         int instruction_length = 0;
         switch (split[0].toUpperCase())
         {
+
             case "MOV":
                 bytes.put(CPUMain.MOV).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
                 instruction_length = 3;
@@ -141,6 +152,18 @@ public class TextCompiler
                 bytes.put(CPUMain.PLACEW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 5;
                 break;
+            case "ADDW":
+                bytes.put(CPUMain.ADDW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 5;
+                break;
+            case "PRINTW":
+                bytes.put(CPUMain.PRINTW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 3;
+                break;
+            case "PRINTHEXW":
+                bytes.put(CPUMain.PRINTHEXW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 3;
+                break;
         }
 
         byte[] condensed_instruction = new byte[instruction_length];
@@ -154,5 +177,26 @@ public class TextCompiler
         {
             return condensed_instruction;
         }
+    }
+
+    private static String parse_static_value(String value)
+    {
+        //byte[] returning_value_temp = new byte[(value.length() - 1) / 2];
+        //int length = 0;
+        if (value.substring(0, 3).equalsIgnoreCase("RBx"))
+        {
+            value = value.replaceAll("RB", "0");
+            value = value.replaceAll("rb", "0");
+            //length = 1;
+        }
+        else if (value.substring(0, 3).equalsIgnoreCase("RWx"))
+        {
+            value = value.replaceAll("RW", "0");
+            value = value.replaceAll("rw", "0");
+        }
+
+        //byte[] returning_value = new byte[length];
+        //System.arraycopy(returning_value_temp, 0, returning_value, 0, length);
+        return value;
     }
 }

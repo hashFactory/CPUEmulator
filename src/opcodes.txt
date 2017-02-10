@@ -1,3 +1,10 @@
+ADDING A NEW INSTRUCTION:
+1. Add specifications to the document
+2. Add instruction byte to CPUMain
+3. Create method in CPUInstructions to handle it
+4. Add method call in control unit in CPUMain
+5. Specify the instruction in the TextCompiler
+
 0x01
 2 byte
 MOV
@@ -106,6 +113,36 @@ PRINTCHAR
 Prints the specified register as a char
 
 0x16
-1 short 1 short
+2 short
 PLACEW
 Place word into specified word register
+
+0x17
+2 short
+ADDW
+Adds the first register and second register and stores the result in the first register, 16 bit
+
+0x18
+2 short
+SUBW
+Subtracts first register and second register and stores the result in the first register, 16 bit
+
+0x19
+2 short
+MULW
+Multiplies the first register and second register and stores the result in the first register, 16 bit
+
+0x1a
+2 short
+DIVW
+Divides first register and second register and stores the result in the first register, 16 bit
+
+0x1b
+1 short
+PRINTW
+Prints the decimal value of 16 bit specified register
+
+0x1c
+1 short
+PRINTHEXW
+Prints the hexadecimal value of 16 bit specified register

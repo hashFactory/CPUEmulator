@@ -8,6 +8,6 @@ public class CPURegisters
     public CPURegisters()
     {
         reg = new byte[128];
-        regw = new short[256];
+        regw = new short[0x0200];
     }
 }

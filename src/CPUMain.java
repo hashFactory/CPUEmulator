@@ -38,12 +38,21 @@ public class CPUMain
     public static final byte RND = 0x14;
     public static final byte PRINTCHAR = 0x15;
     public static final byte PLACEW = 0x16;
+    public static final byte ADDW = 0x17;
+    public static final byte SUBW = 0x18;
+    public static final byte MULW = 0x19;
+    public static final byte DIVW = 0x1a;
+    public static final byte PRINTW = 0x1b;
+    public static final byte PRINTHEXW = 0x1c;
 
     private static CPUInstructions set = new CPUInstructions();
 
     public static void main(String [] args) throws IOException
     {
-        String filename = "test.wor.out";
+        // TODO TEMPORARY
+        TextCompiler.main(new String[0]);
+
+        String filename = "Tests/16bit_arith.wor.out";
         Path path_to_program = Paths.get(filename);
         System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 
@@ -157,6 +166,30 @@ public class CPUMain
                     case PLACEW:
                         set.placew(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
                         set.registers.pc += 4;
+                        break;
+                    case ADDW:
+                        set.addw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.registers.pc += 4;
+                        break;
+                    case SUBW:
+                        set.subw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.registers.pc += 4;
+                        break;
+                    case MULW:
+                        set.mulw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.registers.pc += 4;
+                        break;
+                    case DIVW:
+                        set.divw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2], program_data[set.registers.pc + 3], program_data[set.registers.pc + 4]);
+                        set.registers.pc += 4;
+                        break;
+                    case PRINTW:
+                        set.printw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
+                        break;
+                    case PRINTHEXW:
+                        set.printhexw(program_data[set.registers.pc + 1], program_data[set.registers.pc + 2]);
+                        set.registers.pc += 2;
                         break;
                 }
             }
