@@ -5,6 +5,7 @@ public class CPUMemory
 
     public CPUMemory(int byte_length)
     {
+        // 0x1000
         stack = new byte[byte_length];
     }
 }

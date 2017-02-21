@@ -16,9 +16,9 @@ public class CPUInstructions
         memory = new CPUMemory(size);
     }
 
-    public void mov(byte first, byte second)
+    public void mov(byte first, byte second, byte third)
     {
-        // TODO: Needs for program to be loaded from memory (not the case, file is in heaven)
+        memory.stack[(first & 0xff) + 256 * (second & 0xff)] = third;
     }
 
     public void push(byte first)
@@ -245,4 +245,17 @@ public class CPUInstructions
     {
         registers.reg[first] = (byte)((Math.random() * (third - second)) + second);
     }
+
+    public void sleep(byte first, byte second)
+    {
+        try {
+            Thread.sleep(first + second * 256);
+        }
+        catch (InterruptedException ex)
+        {
+            CPUMain.error_out("Could not make thread sleep");
+            System.exit(0);
+        }
+    }
+
 }

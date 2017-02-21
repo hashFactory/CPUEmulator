@@ -1,4 +1,7 @@
-RND 0x02            ; Create random byte and store it in register 0x02
-PRINTCHAR 0x02      ; Print random byte in hex
-PLACEW 0x0000 0x0001
-/JMP 0x00            ; Jump back to the beginning of the program
+;RND 0x02            ; Create random byte and store it in register 0x02
+;PRINTCHAR 0x02      ; Print random byte in hex
+;PLACEW 0x0000 0x0001
+;/JMP 0x00            ; Jump back to the beginning of the program
+
+MOV rwx1001 0xff
+DRAWSCRN

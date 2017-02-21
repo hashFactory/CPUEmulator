@@ -1,6 +1,6 @@
 PLACE RBx04 0x00            ; Clean up register, make sure it's 0x00
 PLACE RBx05 0x01            ; Initialize the counting register
-PLACE RBx06 0x30            ; Declare max variable
+PLACE RBx06 0x0a            ; Declare max variable
 PUSH 0x2f                   ; Push the encoded value 0x2f to the stack
 POP 0x00                    ; Retrieve the latest byte from the stack
 ADD RBx04 RBx05             ; Add the fifth register (0x01) to the 4th register

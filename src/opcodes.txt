@@ -207,3 +207,14 @@ Cast a byte into a word
 3 byte
 RNDRANGE
 Put second byte as low and third byte as high to put into first register
+
+// TODO IMPLEMENT
+0x29
+0 byte
+INT
+Interrupt with value of register byte 2
+
+0x30
+1 short
+SLEEP
+Sleep for number of milliseconds

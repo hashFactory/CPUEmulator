@@ -4,12 +4,14 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.*;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class TextCompiler
 {
-    public static String path = "Examples/guess.wor";
+    public static String path = "Examples/counting.wor";
     public static File source = new File(path);
+    public static HashMap<String, Short> pointers = new HashMap<>();
 
     public static void main(String [] args) throws IOException
     {
@@ -26,7 +28,7 @@ public class TextCompiler
         int length_of_program = 0;
         while (sc.hasNextLine())
         {
-            byte[] line = parse(sc.nextLine());
+            byte[] line = parse(sc.nextLine(), (short)length_of_program);
             length_of_program += line.length;
             instructions.put(line);
         }
@@ -41,13 +43,33 @@ public class TextCompiler
         CPUMain.print_program(path_to_program);
     }
 
-    private static byte[] parse(String line)
+    private static byte[] parse(String line, short current_spot)
     {
+        System.out.println(line);
         String[] split = line.split(" ");
 
         // Preprocessor
         for (int i = 0; i < split.length; i++)
         {
+            // Replacing word pointers
+            try
+            {
+                if (split[i].charAt(0) == '_' && split[i].charAt(split[i].length() - 1) == ':')
+                {
+                    pointers.put(split[i].replaceAll(":", ""), current_spot);
+                }
+                if (split[i].charAt(0) == '_' && split[i].charAt(split[i].length() - 1) != ':')
+                {
+                    System.out.println("BEFORE: " + split[i]);
+                    split[i] = String.format("%04x", pointers.get(split[i]));
+                    System.out.println("AFTER: " + split[i]);
+                }
+            }
+            catch (StringIndexOutOfBoundsException ex)
+            {
+
+            }
+
             try {
                 if (split[i].substring(0, 3).equalsIgnoreCase("RBx") || split[i].substring(0, 3).equalsIgnoreCase("RWx"))
                 {
@@ -76,13 +98,14 @@ public class TextCompiler
         }
         ByteBuffer bytes = ByteBuffer.allocate(split.length * 2);
 
+        // Actual compiler
         int instruction_length = 0;
         switch (split[0].toUpperCase())
         {
 
             case "MOV":
-                bytes.put(CPUMain.MOV).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
-                instruction_length = 3;
+                bytes.put(CPUMain.MOV).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(DatatypeConverter.parseHexBinary(split[2]));
+                instruction_length = 4;
                 break;
             case "PUSH":
                 bytes.put(CPUMain.PUSH).put(DatatypeConverter.parseHexBinary(split[1]));
@@ -223,6 +246,10 @@ public class TextCompiler
             case "RNDRANGE":
                 bytes.put(CPUMain.RNDRANGE).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2])).put(DatatypeConverter.parseHexBinary(split[3]));
                 instruction_length = 4;
+                break;
+            case "SLEEP":
+                bytes.put(CPUMain.SLEEP).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 3;
                 break;
         }
 

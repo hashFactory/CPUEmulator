@@ -1,0 +1,14 @@
+PLACEW RWx0004 0x0000            ; Clean up register, make sure it's 0x00
+PLACEW RWx0005 0x0001            ; Initialize the counting register
+PLACEW RWx0006 0x000a            ; Declare max variable
+
+_PRINT_VALUES:
+ADDW RWx0004 RWx0005           ; Add the fifth register (0x01) to the 4th register
+PRINTHEXW RWx0004              ; Print the counting register in hexadecimal
+PRINTW RWx0004                 ; Print the counting register in decimal values
+
+_HALT:
+HLT
+
+_COMPARE:
+CMPW RWx0004 RWx0006  _PRINT_VALUES   ; Actual comparative instruction, comparing 0x02 and 0x03

@@ -1,3 +1,5 @@
+import java.applet.Applet;
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.*;
 
@@ -11,8 +13,8 @@ public class CPUMain
     // TODO: Implement dynamic references to mamory locations in program
     // TODO NEVER: - Implement floating point
     // TODO: Video buffer
-    // TODO: Code the MOV command
     // TODO: Implement interupts that output essential program data
+    // TODO: Make a basic operation system
     // Pat yourself on the back bud, you did great!
 
     public static final byte MOV = 0x01;
@@ -49,24 +51,26 @@ public class CPUMain
     public static final byte JMPW = 0x20;
     public static final byte INPUT = 0x21;
     public static final byte RNDW = 0x22;
-    public static final byte CP = 0x23;
+    public static final byte CP = 0x23; // TODO
     public static final byte PRINTREG = 0x25;
     public static final byte CASTWB = 0x26;
     public static final byte CASTBW = 0x27;
     public static final byte RNDRANGE = 0x28;
+    public static final byte INT = 0x29; // TODO
+    public static final byte SLEEP = 0x30;
 
     private static CPUInstructions set = new CPUInstructions();
 
     public static void main(String [] args) throws IOException
     {
-        // TODO TEMPORARY
+        // TODO TEMPORARY FOR DEBUGGING PROGRAMS
         TextCompiler.main(new String[0]);
 
-        String filename = "Examples/guess.wor.out";
+        String filename = "Examples/counting.wor.out";
         Path path_to_program = Paths.get(filename);
         System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 
-        set.setMemory((int)Files.size(path_to_program) + 4096);
+        set.setMemory((int)Files.size(path_to_program) + 44096);
         System.out.println((char)27 + "[32mSuccessfully initialized Registers, Memory, and Instruction Set" + (char)27 + "[0m");
 
         print_program(path_to_program);
@@ -93,7 +97,7 @@ public class CPUMain
                 switch (current_byte)
                 {
                     case MOV:
-                        set.mov(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
+                        set.mov(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3]);
                         set.registers.pc += 2;
                         break;
                     case PUSH:
@@ -241,6 +245,10 @@ public class CPUMain
                         set.rndrange(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3]);
                         set.registers.pc += 3;
                         break;
+                    case SLEEP:
+                        set.sleep(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
+                        set.registers.pc += 2;
+                        break;
                 }
             }
         }
@@ -284,6 +292,11 @@ public class CPUMain
         {
             System.out.println("Register " + (char)27 + "[1m" + String.format("0x%04x", i) + (char)27 + "[0m: " + String.format("0x%04x", reg.regw[i]) + " ");
         }
+    }
+
+    public static void error_out(String error)
+    {
+        System.out.println((char)27 + "[31m" + error + (char)27 + "[0m");
     }
 
     public static int unsigned_to_byte(byte b)
