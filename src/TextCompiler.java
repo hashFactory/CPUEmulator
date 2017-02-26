@@ -1,17 +1,32 @@
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
+import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+
+class MethodCall
+{
+    public String key;
+    public short location;
+
+    public MethodCall(String k, short l)
+    {
+        key = k;
+        location = l;
+    }
+}
 
 public class TextCompiler
 {
     public static String path = "Examples/counting.wor";
     public static File source = new File(path);
     public static HashMap<String, Short> pointers = new HashMap<>();
+    public static ArrayList<MethodCall> methodCall = new ArrayList<>();
 
     public static void main(String [] args) throws IOException
     {
@@ -31,6 +46,15 @@ public class TextCompiler
             byte[] line = parse(sc.nextLine(), (short)length_of_program);
             length_of_program += line.length;
             instructions.put(line);
+        }
+
+        for (MethodCall method_call: methodCall)
+        {
+            byte[] location = new byte[2];
+            location[0] = (byte)(pointers.get(method_call.key) & 0xff);
+            location[1] = (byte)((pointers.get(method_call.key) >> 8) & 0xff);
+            instructions.put(method_call.location , location[0]);
+            instructions.put(method_call.location + 1, location[1]);
         }
 
         byte[] instructions_shortened = new byte[length_of_program];
@@ -61,7 +85,24 @@ public class TextCompiler
                 if (split[i].charAt(0) == '_' && split[i].charAt(split[i].length() - 1) != ':')
                 {
                     System.out.println("BEFORE: " + split[i]);
-                    split[i] = String.format("%04x", pointers.get(split[i]));
+                    if (pointers.get(split[i]) != null)
+                    {
+                        split[i] = String.format("%04x", pointers.get(split[i]));
+                    }
+                    else
+                    {
+                        if (i == 1)
+                        {
+                            System.out.println("Expecting " + split[i] + " method to be JMPW'd to here: " + String.format("0x%04x", current_spot + 1));
+                            methodCall.add(new MethodCall(split[i], (short) (current_spot + 1)));
+                        }
+                        else if (i == 3)
+                        {
+                            System.out.println("Expecting " + split[i] + " method to be JMPW'd to here: " + String.format("0x%04x", current_spot + i + 2));
+                            methodCall.add(new MethodCall(split[i], (short) (current_spot + i + 2)));
+                        }
+                        split[i] = "0x0000";
+                    }
                     System.out.println("AFTER: " + split[i]);
                 }
             }

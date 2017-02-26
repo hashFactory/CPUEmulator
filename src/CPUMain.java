@@ -250,6 +250,7 @@ public class CPUMain
                         set.registers.pc += 2;
                         break;
                 }
+                //System.out.println("Executed " + String.format("0x%04x", set.registers.pc) + " correctly");
             }
         }
 
