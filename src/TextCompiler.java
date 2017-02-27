@@ -23,7 +23,7 @@ class MethodCall
 
 public class TextCompiler
 {
-    public static String path = "Examples/counting.wor";
+    public static String path = "Examples/user_input.wor";
     public static File source = new File(path);
     public static HashMap<String, Short> pointers = new HashMap<>();
     public static ArrayList<MethodCall> methodCall = new ArrayList<>();
@@ -55,6 +55,7 @@ public class TextCompiler
             location[1] = (byte)((pointers.get(method_call.key) >> 8) & 0xff);
             instructions.put(method_call.location , location[0]);
             instructions.put(method_call.location + 1, location[1]);
+            System.out.println("Replaced instance of " + method_call.key + " with location " + String.format("0x%04x", pointers.get(method_call.key)));
         }
 
         byte[] instructions_shortened = new byte[length_of_program];
@@ -290,6 +291,22 @@ public class TextCompiler
                 break;
             case "SLEEP":
                 bytes.put(CPUMain.SLEEP).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 3;
+                break;
+            case "MOD":
+                bytes.put(CPUMain.MOD).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                instruction_length = 3;
+                break;
+            case "MODW":
+                bytes.put(CPUMain.MODW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                instruction_length = 5;
+                break;
+            case "INPUTNUM":
+                bytes.put(CPUMain.INPUTNUM).put(DatatypeConverter.parseHexBinary(split[1]));
+                instruction_length = 2;
+                break;
+            case "INPUTNUMW":
+                bytes.put(CPUMain.INPUTNUMW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
                 break;
         }

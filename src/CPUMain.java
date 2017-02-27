@@ -11,13 +11,12 @@ public class CPUMain
     // TODO: Implement 32-bit arithmetic
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
     // TODO: Priority low: literal instructions vs pointer instructions
-    // TODO: Implement dynamic references to mamory locations in program
+    // TODO: Implement dynamic references to memory locations in program
     // TODO NEVER: - Implement floating point
-    // TODO: Video buffer
+    // TODO: Video buffer - next thing to do
     // TODO: Implement interupts that output essential program data
     // TODO: Make a basic operation system
     // TODO: Virtual hard drive
-    // TODO: MOD and MODW for calculations
     // Pat yourself on the back bud, you did great!
 
     public static final byte MOV = 0x01;
@@ -60,7 +59,11 @@ public class CPUMain
     public static final byte CASTBW = 0x27;
     public static final byte RNDRANGE = 0x28;
     public static final byte INT = 0x29; // TODO
-    public static final byte SLEEP = 0x30;
+    public static final byte SLEEP = 0x2a;
+    public static final byte MOD = 0x2b;
+    public static final byte MODW = 0x2c;
+    public static final byte INPUTNUM = 0x2d;
+    public static final byte INPUTNUMW = 0x2e;
 
     private static CPUInstructions set = new CPUInstructions();
 
@@ -69,7 +72,7 @@ public class CPUMain
         // TODO TEMPORARY FOR DEBUGGING PROGRAMS
         TextCompiler.main(new String[0]);
 
-        String filename = "Examples/counting.wor.out";
+        String filename = "Examples/user_input.wor.out";
         Path path_to_program = Paths.get(filename);
         System.out.println((char)27 + "[32mRunning " + (char)27 + "[1m" + (char)27 + "[34m" + filename + (char)27 + "[0m");
 
@@ -250,6 +253,22 @@ public class CPUMain
                         break;
                     case SLEEP:
                         set.sleep(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
+                        set.registers.pc += 2;
+                        break;
+                    case MOD:
+                        set.mod(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
+                        set.registers.pc += 2;
+                        break;
+                    case MODW:
+                        set.modw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2], set.memory.stack[set.registers.pc + 3], set.memory.stack[set.registers.pc + 4]);
+                        set.registers.pc += 4;
+                        break;
+                    case INPUTNUM:
+                        set.inputnum(set.memory.stack[set.registers.pc + 1]);
+                        set.registers.pc ++;
+                        break;
+                    case INPUTNUMW:
+                        set.inputnumw(set.memory.stack[set.registers.pc + 1], set.memory.stack[set.registers.pc + 2]);
                         set.registers.pc += 2;
                         break;
                 }

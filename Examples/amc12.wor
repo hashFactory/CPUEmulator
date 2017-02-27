@@ -1,0 +1,16 @@
+// DATA
+
+PLACEW RWx0000 0x0001           ; Counting constant
+PLACEW RWx0001 0x005a           ; 90 incremental constant
+PLACEW RWx0002 0x0007           ; Number of scores
+
+PLACEW RWx0010 0x0006           ; Place all the data in registers
+PLACEW RWx0011 0x0002           ; These will be incremented by 90 soon
+PLACEW RWx0012 0x0001           ; In the _INCREMENT_BY_90 method
+PLACEW RWx0013 0x0007
+PLACEW RWx0014 0x0004
+PLACEW RWx0015 0x000a
+PLACEW RWx0016 0x0005
+
+// PROGRAM
+

@@ -214,7 +214,27 @@ Put second byte as low and third byte as high to put into first register
 INT
 Interrupt with value of register byte 2
 
-0x30
+0x2a
 1 short
 SLEEP
 Sleep for number of milliseconds
+
+0x2b
+2 byte
+MOD
+Modulate register specified by other specified register
+
+0x2c
+2 short
+MODW
+Modulate 16-bit register specified with second specified register
+
+0x2d
+1 byte
+INPUTNUM
+Get user input, put it in specified register
+
+0x2e
+1 short
+INPUTNUMW
+Get user input as word, put it in specified 16-bit register

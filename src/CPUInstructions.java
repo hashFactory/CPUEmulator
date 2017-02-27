@@ -258,4 +258,24 @@ public class CPUInstructions
         }
     }
 
+    public void mod(byte first, byte second)
+    {
+        registers.reg[first] %= registers.reg[second];
+    }
+
+    public void modw(byte first, byte second, byte third, byte fourth)
+    {
+        registers.regw[first + second * 256] %= registers.regw[third + fourth * 256];
+    }
+
+    public void inputnum(byte first)
+    {
+        registers.reg[first] = kb.nextByte();
+    }
+
+    public void inputnumw(byte first, byte second)
+    {
+        registers.regw[first + second * 256] = kb.nextShort();
+    }
+
 }
