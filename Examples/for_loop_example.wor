@@ -1,0 +1,10 @@
+PLACEW RWx0001 0x0001               ; Initialize constant incrementer
+PLACEW RWx0003 0x001a               ; Initialize upper bound
+
+_LOOP:
+PRINTW RWx0002                      ;
+ADDW RWx0002 RWx0001
+CMPW RWx0002 RWx0003 _HALT _LOOP
+
+_HALT:
+HLT

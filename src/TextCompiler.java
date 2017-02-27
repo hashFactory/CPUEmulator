@@ -23,7 +23,7 @@ class MethodCall
 
 public class TextCompiler
 {
-    public static String path = "Examples/user_input.wor";
+    public static String path = "Examples/mod_example.wor";
     public static File source = new File(path);
     public static HashMap<String, Short> pointers = new HashMap<>();
     public static ArrayList<MethodCall> methodCall = new ArrayList<>();
