@@ -8,6 +8,7 @@ import java.nio.file.*;
 
 public class CPUMain
 {
+    // TODO: Implement 32-bit arithmetic
     // TODO: Implement read and write from file (pointer to filename & length of data segment)
     // TODO: Priority low: literal instructions vs pointer instructions
     // TODO: Implement dynamic references to mamory locations in program
@@ -15,6 +16,8 @@ public class CPUMain
     // TODO: Video buffer
     // TODO: Implement interupts that output essential program data
     // TODO: Make a basic operation system
+    // TODO: Virtual hard drive
+    // TODO: MOD and MODW for calculations
     // Pat yourself on the back bud, you did great!
 
     public static final byte MOV = 0x01;
