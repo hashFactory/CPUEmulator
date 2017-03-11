@@ -8,16 +8,18 @@ import java.nio.file.*;
 
 public class CPUMain
 {
-    // TODO: Implement 32-bit arithmetic
-    // TODO: Implement read and write from file (pointer to filename & length of data segment)
-    // TODO: Priority low: literal instructions vs pointer instructions
-    // TODO: Implement dynamic references to memory locations in program
-    // TODO NEVER: - Implement floating point
-    // TODO: Video buffer - next thing to do
-    // TODO: Implement interupts that output essential program data
-    // TODO: Make a basic operation system
-    // TODO: Virtual hard drive
-    // Pat yourself on the back bud, you did great!
+    /*
+    TODO: Implement 32-bit arithmetic
+    TODO: Implement read and write from file (pointer to filename & length of data segment)
+    TODO: Priority low: literal instructions vs pointer instructions
+    TODO: Implement dynamic references to memory locations in program
+    TODO NEVER: - Implement floating point
+    TODO: Video buffer - next thing to do
+    TODO: Implement interupts that output essential program data
+    TODO: Make a basic operation system
+    TODO: Virtual hard drive
+    Pat yourself on the back bud, you did great!
+    */
 
     public static final byte MOV = 0x01;
     public static final byte PUSH = 0x02;

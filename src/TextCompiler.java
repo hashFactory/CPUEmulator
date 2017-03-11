@@ -71,6 +71,7 @@ public class TextCompiler
     private static byte[] parse(String line, short current_spot)
     {
         System.out.println(line);
+
         String[] split = line.split(" ");
 
         // Preprocessor

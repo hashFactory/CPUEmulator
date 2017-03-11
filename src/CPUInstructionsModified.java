@@ -31,7 +31,7 @@ public class CPUInstructionsModified
     @Deprecated
     public void pop(byte first)
     {
-        registers.reg[0x02] = memory.stack[registers.pl + registers.sh - (byte)(first)];
+        registers.reg[0x02] = memory.stack[registers.pl + registers.sh - first];
         registers.sh--;
     }
 
