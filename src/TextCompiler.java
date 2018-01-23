@@ -1,4 +1,3 @@
-import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
@@ -23,7 +22,7 @@ class MethodCall
 
 public class TextCompiler
 {
-    public static String path = "Examples/mod_example.wor";
+    public static String path = "Examples/method.wor";
     public static File source = new File(path);
     public static HashMap<String, Short> pointers = new HashMap<>();
     public static ArrayList<MethodCall> methodCall = new ArrayList<>();
@@ -66,6 +65,17 @@ public class TextCompiler
         sc.close();
         System.out.println((char)27 + "[32mCompilation successful." + (char)27 + "[0m");
         CPUMain.print_program(path_to_program);
+    }
+
+    private static byte[] hexstringtobyte(String input)
+    {
+        byte[] result = new byte[input.length() / 2];
+        for (int i = 0; i < result.length; i++)
+        {
+            int index = i * 2;
+            result[i] = (byte)Integer.parseInt(input.substring(index, index + 2), 16);
+        }
+        return result;
     }
 
     private static byte[] parse(String line, short current_spot)
@@ -147,75 +157,75 @@ public class TextCompiler
         {
 
             case "MOV":
-                bytes.put(CPUMain.MOV).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.MOV).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(hexstringtobyte(split[2]));
                 instruction_length = 4;
                 break;
             case "PUSH":
-                bytes.put(CPUMain.PUSH).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.PUSH).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "POP":
-                bytes.put(CPUMain.POP).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.POP).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "ADD":
-                bytes.put(CPUMain.ADD).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.ADD).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "SUB":
-                bytes.put(CPUMain.SUB).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.SUB).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "PLACE":
-                bytes.put(CPUMain.PLACE).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.PLACE).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "PRINT":
-                bytes.put(CPUMain.PRINT).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.PRINT).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "MUL":
-                bytes.put(CPUMain.MUL).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.MUL).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "DIV":
-                bytes.put(CPUMain.DIV).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.DIV).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "AND":
-                bytes.put(CPUMain.AND).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.AND).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "OR":
-                bytes.put(CPUMain.OR).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.OR).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "NOT":
-                bytes.put(CPUMain.NOT).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.NOT).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "NAND":
-                bytes.put(CPUMain.NAND).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.NAND).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "NOR":
-                bytes.put(CPUMain.NOR).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.NOR).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "XOR":
-                bytes.put(CPUMain.XOR).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.XOR).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "PRINTHEX":
-                bytes.put(CPUMain.PRINTHEX).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.PRINTHEX).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "JMP":
-                bytes.put(CPUMain.JMP).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.JMP).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "CMP":
-                bytes.put(CPUMain.CMP).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2])).put(DatatypeConverter.parseHexBinary(split[3])).put(DatatypeConverter.parseHexBinary(split[4]));
+                bytes.put(CPUMain.CMP).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2])).put(hexstringtobyte(split[3])).put(hexstringtobyte(split[4]));
                 instruction_length = 5;
                 break;
             case "HLT":
@@ -223,91 +233,91 @@ public class TextCompiler
                 instruction_length = 1;
                 break;
             case "RND":
-                bytes.put(CPUMain.RND).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.RND).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "PRINTCHAR":
-                bytes.put(CPUMain.PRINTCHAR).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.PRINTCHAR).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "PLACEW":
-                bytes.put(CPUMain.PLACEW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.PLACEW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 5;
                 break;
             case "ADDW":
-                bytes.put(CPUMain.ADDW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.ADDW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 5;
                 break;
             case "PRINTW":
-                bytes.put(CPUMain.PRINTW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.PRINTW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
                 break;
             case "PRINTHEXW":
-                bytes.put(CPUMain.PRINTHEXW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.PRINTHEXW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
                 break;
             case "CMPW":
-                bytes.put(CPUMain.CMPW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[3])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[4])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.CMPW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[3])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[4])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 9;
                 break;
             case "GTW":
-                bytes.put(CPUMain.GTW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[3])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[4])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.GTW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[3])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[4])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 9;
                 break;
             case "LTW":
-                bytes.put(CPUMain.LTW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[3])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[4])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.LTW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[3])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[4])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 9;
                 break;
             case "JMPW":
-                bytes.put(CPUMain.JMPW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.JMPW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
                 break;
             case "INPUT":
-                bytes.put(CPUMain.INPUT).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.INPUT).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "RNDW":
-                bytes.put(CPUMain.RNDW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.RNDW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
                 break;
             case "CP":
-                bytes.put(CPUMain.CP).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.CP).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "PRINTREG":
-                bytes.put(CPUMain.PRINTREG).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.PRINTREG).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "CASTWB":
-                bytes.put(CPUMain.CASTWB).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.CASTWB).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(hexstringtobyte(split[2]));
                 instruction_length = 4;
                 break;
             case "CASTBW":
-                bytes.put(CPUMain.CASTBW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.CASTBW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).put(hexstringtobyte(split[2]));
                 instruction_length = 4;
                 break;
             case "RNDRANGE":
-                bytes.put(CPUMain.RNDRANGE).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2])).put(DatatypeConverter.parseHexBinary(split[3]));
+                bytes.put(CPUMain.RNDRANGE).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2])).put(hexstringtobyte(split[3]));
                 instruction_length = 4;
                 break;
             case "SLEEP":
-                bytes.put(CPUMain.SLEEP).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.SLEEP).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
                 break;
             case "MOD":
-                bytes.put(CPUMain.MOD).put(DatatypeConverter.parseHexBinary(split[1])).put(DatatypeConverter.parseHexBinary(split[2]));
+                bytes.put(CPUMain.MOD).put(hexstringtobyte(split[1])).put(hexstringtobyte(split[2]));
                 instruction_length = 3;
                 break;
             case "MODW":
-                bytes.put(CPUMain.MODW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.MODW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort()).putShort(ByteBuffer.wrap(hexstringtobyte(split[2])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 5;
                 break;
             case "INPUTNUM":
-                bytes.put(CPUMain.INPUTNUM).put(DatatypeConverter.parseHexBinary(split[1]));
+                bytes.put(CPUMain.INPUTNUM).put(hexstringtobyte(split[1]));
                 instruction_length = 2;
                 break;
             case "INPUTNUMW":
-                bytes.put(CPUMain.INPUTNUMW).putShort(ByteBuffer.wrap(DatatypeConverter.parseHexBinary(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
+                bytes.put(CPUMain.INPUTNUMW).putShort(ByteBuffer.wrap(hexstringtobyte(split[1])).order(ByteOrder.LITTLE_ENDIAN).getShort());
                 instruction_length = 3;
                 break;
         }
